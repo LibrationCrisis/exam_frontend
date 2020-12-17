@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 const Login = () => import('@/components/common/Login')
 const StudentIndex = () => import('@/components/student/index')
+const myExam = () => import('@/components/student/myExam')
 
 // 安装插件
 Vue.use(VueRouter)
@@ -20,7 +21,10 @@ const routes = [
         path: '/student',
         component: StudentIndex,
         children:[
-
+            {
+                path: '/',
+                component: myExam
+            },
         ]
     }
 ]
