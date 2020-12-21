@@ -66,7 +66,7 @@ export default {
     //用户登录请求后台处理
     login() {
       console.log("登录操作执行-------");
-      this.$router.push({path: '/student'}) //跳转到首页
+      this.$router.push({path: '/teacher'}) //跳转到首页
       /*this.$axios({
         url: '/api/login',
         method: 'post',

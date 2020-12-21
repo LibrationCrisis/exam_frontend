@@ -21,16 +21,16 @@
         <ul class="list">
           <li class="logo"><i class="iconfont icon-kaoshi"></i><span>Exam-Online</span></li>
           <li><a href="javascript:;" @click="exam()">我的试卷</a></li>
-          <!--          <li><a href="javascript:;" @click="practice()">我的练习</a></li>-->
+          <!--<li><a href="javascript:;" @click="practice()">我的练习</a></li>-->
           <li><router-link to="/scoreTable">我的分数</router-link></li>
-          <!--          <li><router-link to="/message">给我留言</router-link></li>
-                    <li><a href="javascript:;">待定</a></li>-->
+          <li><router-link to="/message">给我留言</router-link></li>
+          <li><a href="javascript:;">待定</a></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
 <!--            <a href="javascript:;"><i class="iconfont icon-Userselect icon"></i>{{user.userName}}</a>-->
-<!--            <div class="msg" v-if="flag">-->
-<!--              &lt;!&ndash;              <p @click="manage()">管理中心</p>&ndash;&gt;-->
-<!--              <p class="exit" @click="exit()">退出</p>-->
-<!--            </div>-->
+            <div class="msg" v-if="flag">
+              <p @click="manage()">管理中心</p>
+              <p class="exit" @click="exit()">退出</p>
+            </div>
           </li>
         </ul>
       </el-col>
@@ -43,55 +43,55 @@
   </div>
 </template>
 
-<!--<script>-->
-<!--import myFooter from "@/components/student/myFooter"-->
-<!--import store from '@/vuex/store'-->
-<!--import {mapState} from 'vuex'-->
-<!--export default {-->
-<!--  store,-->
-<!--  components: {-->
-<!--    "v-footer": myFooter-->
-<!--  },-->
-<!--  data() {-->
-<!--    return {-->
-<!--      flag: false,-->
-<!--      user: {}-->
-<!--    }-->
-<!--  },-->
-<!--  created() {-->
-<!--    this.userInfo()-->
-<!--  },-->
-<!--  methods: {-->
-<!--    exit() {  //退出登录-->
-<!--      this.$router.push({path:"/"}) //跳转到登录页面-->
-<!--      this.$cookies.remove("cname") //清除cookie-->
-<!--      this.$cookies.remove("cid")-->
-<!--    },-->
-<!--    /*manage() {  //跳转到修改密码页面-->
-<!--      this.$router.push({path: '/manager'})-->
-<!--    },*/-->
-<!--    userInfo() {-->
-<!--      let studentName = this.$cookies.get("cname")-->
-<!--      let studentId = this.$cookies.get("cid")-->
-<!--      console.log(`studentId${studentId}`)-->
-<!--      console.log(`studentName ${studentName}`)-->
-<!--      this.user.userName = studentName-->
-<!--      this.user.studentId = studentId-->
-<!--    },-->
-<!--    /*practice() { //跳转练习模式-->
-<!--      let isPractice = true-->
-<!--      this.$store.commit("practice", isPractice)-->
-<!--      this.$router.push({path:'/startExam'})-->
-<!--    },*/-->
-<!--    exam() { //跳转考试模式-->
-<!--      let isPractice = false-->
-<!--      this.$store.commit("practice", isPractice)-->
-<!--      this.$router.push({path:'/student'})-->
-<!--    }-->
-<!--  },-->
-<!--  computed:mapState(["isPractice"])-->
-<!--}-->
-<!--</script>-->
+<script>
+// import myFooter from "@/components/student/myFooter"
+// import store from '@/vuex/store'
+// import {mapState} from 'vuex'
+// export default {
+//   store,
+//   components: {
+//     "v-footer": myFooter
+//   },
+//   data() {
+//     return {
+//       flag: false,
+//       user: {}
+//     }
+//   },
+//   created() {
+//     this.userInfo()
+//   },
+//   methods: {
+//     exit() {  //退出登录
+//       this.$router.push({path:"/"}) //跳转到登录页面
+//       this.$cookies.remove("cname") //清除cookie
+//       this.$cookies.remove("cid")
+//     },
+//     /*manage() {  //跳转到修改密码页面
+//       this.$router.push({path: '/manager'})
+//     },*/
+//     userInfo() {
+//       let studentName = this.$cookies.get("cname")
+//       let studentId = this.$cookies.get("cid")
+//       console.log(`studentId${studentId}`)
+//       console.log(`studentName ${studentName}`)
+//       this.user.userName = studentName
+//       this.user.studentId = studentId
+//     },
+    /*practice() { //跳转练习模式
+      let isPractice = true
+      this.$store.commit("practice", isPractice)
+      this.$router.push({path:'/startExam'})
+    },*/
+  //   exam() { //跳转考试模式
+  //     let isPractice = false
+  //     this.$store.commit("practice", isPractice)
+  //     this.$router.push({path:'/student'})
+  //   }
+  // },
+  // computed:mapState(["isPractice"])
+// }
+</script>
 
 <style lang="scss">
 .right .icon {
