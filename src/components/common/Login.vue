@@ -46,7 +46,7 @@
 
 
 <script>
-import store from '@/vuex'
+import store from '@/vuex/store'
 import {mapState} from 'vuex'
 
 export default {

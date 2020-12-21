@@ -10,8 +10,16 @@ const ScoreTable = () => import("@/components/student/scoreTable")
 const Answer = () => import("@/components/student/answer")
 const TeacherIndex = () => import("@/components/teacher/index")
 const Grade = () => import('@/components/charts/grade')
-const selectExamToPart = () => import('@/components/teacher/selectExamToPart')
-const scorePart = () => import('@/components/charts/scorePart')
+const SelectExamToPart = () => import('@/components/teacher/selectExamToPart')
+const ScorePart = () => import('@/components/charts/scorePart')
+const AllStudentsGrade = () => import('@/components/teacher/allStudentsGrade')
+const ExamDescription = () => import('@/components/teacher/examDescription')
+const SelectExam = () => import('@/components/teacher/selectExam')
+const AddExam = () => import('@/components/teacher/addExam')
+const AnswerDescription = () => import('@/components/teacher/answerDescription')
+const SelectAnswer = () => import('@/components/teacher/selectAnswer')
+const AddAnswer = () => import('@/components/teacher/addAnswer')
+const AddAnswerChildren =  () => import('@/components/teacher/addAnswerChildren')
 
 // 安装插件
 Vue.use(VueRouter)
@@ -59,11 +67,43 @@ const routes = [
             },
             {
                 path: '/selectExamToPart', //学生分数段
-                component: selectExamToPart
+                component: SelectExamToPart
             },
             {
                 path: '/scorePart',
-                component: scorePart
+                component: ScorePart
+            },
+            {
+                path: '/allStudentsGrade', //所有学生成绩统计
+                component: AllStudentsGrade
+            },
+            {
+                path: '/examDescription', //考试管理功能描述
+                component: ExamDescription
+            },
+            {
+                path: '/selectExam', //查询所有考试
+                component: SelectExam
+            },
+            {
+                path: '/addExam', //添加考试
+                component: AddExam
+            },
+            {
+                path: '/answerDescription', //题库管理功能介绍
+                component: AnswerDescription
+            },
+            {
+                path: '/selectAnswer', //查询所有题库
+                component: SelectAnswer
+            },
+            {
+                path: '/addAnswer', //增加题库主界面
+                component: AddAnswer
+            },
+            {
+                path: '/addAnswerChildren', //点击试卷跳转到添加题库页面
+                component: AddAnswerChildren
             },
         ]
     }

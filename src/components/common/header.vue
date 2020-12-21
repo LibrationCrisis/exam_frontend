@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import store from '@/vuex/index'
+import store from '@/vuex/store'
 import {mapState,mapMutations} from 'vuex'
 export default {
   data() {

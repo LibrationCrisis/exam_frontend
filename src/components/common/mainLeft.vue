@@ -6,8 +6,8 @@
       text-color="#000"
       :default-active="this.$route.path"
       class="el-menu-vertical-demo"
-<!--      @open="handleOpen"-->
-<!--      @close="handleClose"-->
+      @open="handleOpen"
+      @close="handleClose"
       :collapse="flag"
       background-color="#124280"
       menu-trigger="click" router>
@@ -19,58 +19,55 @@
           </div>
         </template>
         <el-menu-item-group v-for="(list,index1) in item.content" :key="index1">
-<!--          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item1 != null">{{list.item1}}</el-menu-item>-->
-<!--          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item2 != null">{{list.item2}}</el-menu-item>-->
-<!--          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item3 != null">{{list.item3}}</el-menu-item>-->
-          <el-menu-item>111111111</el-menu-item>
-          <el-menu-item>111111111</el-menu-item>
-          <el-menu-item>111111111</el-menu-item>
+          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item1 != null">{{list.item1}}</el-menu-item>
+          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item2 != null">{{list.item2}}</el-menu-item>
+          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item3 != null">{{list.item3}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
   </div>
 </template>
 
-<!--<script>-->
-<!--// import store from '@/vuex/store'-->
-<!--import {mapState} from 'vuex'-->
-<!--export default {-->
-<!--  name: "mainLeft",-->
-<!--  data() {-->
-<!--    return {-->
+<script>
+import store from '@/vuex/store'
+import {mapState} from 'vuex'
+export default {
+  name: "mainLeft",
+  data() {
+    return {
 
-<!--    }-->
-<!--  },-->
-<!--  // computed: mapState(["flag","menu"]),-->
-<!--  created() {-->
-<!--    // this.addData()-->
-<!--  },-->
-<!--  methods: {-->
-<!--    handleOpen(key, keyPath) {-->
-<!--      // console.log(key, keyPath);-->
-<!--    },-->
-<!--    handleClose(key, keyPath) {-->
-<!--      // console.log(key, keyPath);-->
-<!--    },-->
-<!--    //点击标题传递参数给navigator组件-->
-<!--    handleTitle(index) {-->
-<!--      // this.bus.$emit('sendIndex',index)-->
-<!--    },-->
-<!--   /* addData() {-->
-<!--      let role = this.$cookies.get("role")-->
-<!--      if(role == 0) {-->
-<!--        this.menu.push({-->
-<!--          index: '5',-->
-<!--          title: '教师管理',-->
-<!--          icon: 'icon-Userselect',-->
-<!--          content:[{item1:'教师管理',path:'/teacherManage'},{item2: '添加教师',path: '/addTeacher'}],-->
-<!--        })-->
-<!--      }-->
-<!--    }*/-->
-<!--  },-->
-<!--  store-->
-<!--}-->
-<!--</script>-->
+    }
+  },
+  computed: mapState(["flag","menu"]),
+  created() {
+    this.addData()
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    //点击标题传递参数给navigator组件
+    handleTitle(index) {
+      // this.bus.$emit('sendIndex',index)
+    },
+   addData() {
+      let role = this.$cookies.get("role")
+      if(role == 0) {
+        this.menu.push({
+          index: '5',
+          title: '教师管理',
+          icon: 'icon-Userselect',
+          content:[{item1:'教师管理',path:'/teacherManage'},{item2: '添加教师',path: '/addTeacher'}],
+        })
+      }
+    }
+  },
+  store
+}
+</script>
 
 <style>
 .el-menu-vertical-demo .el-submenu__title {
