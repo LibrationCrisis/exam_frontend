@@ -1,10 +1,14 @@
-/*const fs = require('fs')
 module.exports = {
-    css: {
-        loaderOptions: {
-            sass: {
-                data: fs.readFileSync('src/assets/css/variable.scss', 'utf-8')
+    devServer: {
+        proxy: {
+            '/api': {
+                // 需要代理的url
+                target: 'http://10.22.136.49:8000',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': '/'
+                }
             }
         }
     }
-}*/
+}
