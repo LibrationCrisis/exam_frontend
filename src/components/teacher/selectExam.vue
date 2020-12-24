@@ -1,9 +1,9 @@
 //查询所有考试
 <template>
   <div class="exam">
-    <el-table :data="pagination.records" border>
+    <el-table :data="pagination" border>
       <el-table-column fixed="left" prop="source" label="试卷名称" width="180"></el-table-column>
-      <el-table-column prop="description" label="介绍" width="200"></el-table-column>
+        <el-table-column prop="description" label="介绍" width="200"></el-table-column>
       <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
       <el-table-column prop="major" label="所属专业" width="200"></el-table-column>
       <el-table-column prop="grade" label="年级" width="100"></el-table-column>
@@ -101,14 +101,72 @@ export default {
       this.$axios({
         url: `/api/exams/${this.pagination.current}/${this.pagination.size}`,
         method: "GET",
-
       }).then(res => {
-        console.log(res)
+        this.pagination = res.data
+        console.log(this.pagination)
       }).catch(error => {
         console.log(error)
       })
-    }
-  }
+    },
+    edit(examCode) { //编辑试卷
+      this.dialogVisible = true
+      this.$axios(`/api/exam/${examCode}`).then(res => { //根据试卷id请求后台
+        if(res.data.code == 200) {
+          this.form = res.data.data
+        }
+      })
+    },
+    handleClose(done) { //关闭提醒
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          }).catch(_ => {});
+    },
+    submit() { //提交修改后的试卷信息
+      this.dialogVisible = false
+      this.$axios({
+        url: '/api/exam',
+        method: 'put',
+        data: {
+          ...this.form
+        }
+      }).then(res => {
+        if(res.data.code == 200) {
+          this.$message({ //成功修改提示
+            message: '更新成功',
+            type: 'success'
+          })
+        }
+        this.getExamInfo()
+      })
+    },
+    deleteRecord(examCode) {
+      this.$confirm("确定删除该记录吗,该操作不可逆！！！","删除提示",{
+        confirmButtonText: '确定删除',
+        cancelButtonText: '算了,留着',
+        type: 'danger'
+      }).then(()=> { //确认删除
+        this.$axios({
+          url: `/api/exam/${examCode}`,
+          method: 'delete',
+        }).then(res => {
+          this.getExamInfo()
+        })
+      }).catch(() => {
+
+      })
+    },
+    //改变当前记录条数
+    handleSizeChange(val) {
+      this.pagination.size = val
+      this.getExamInfo()
+    },
+    //改变当前页码，重新发送请求
+    handleCurrentChange(val) {
+      this.pagination.current = val
+      this.getExamInfo()
+    },
+  },
 }
 </script>
 <!--<script>-->

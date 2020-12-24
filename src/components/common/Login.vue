@@ -89,7 +89,7 @@ export default {
         // // console.log(jsonObj);
         if (this.formLabelAlign.username == res.data.id && this.formLabelAlign.password == res.data.password)
         console.log(res.data.id);
-        this.$router.push({path: '/teacher'}) //跳转到首页
+        this.$router.push({path: '/student'}) //跳转到首页
       }).catch(error =>{
         console.log(error)
       })
