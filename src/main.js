@@ -9,7 +9,9 @@ import axios from "axios";
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+axios.defaults.timeout = 3000
 Vue.prototype.$axios = axios
+
 
 new Vue({
     router,

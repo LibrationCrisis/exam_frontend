@@ -1,9 +1,27 @@
 //查询所有考试
 <template>
   <div class="exam">
+    <el-table
+        :data="pagination"
+        style="width: 100%">
+      <el-table-column
+          prop="major"
+          label="日期"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="institute"
+          label="姓名"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="source"
+          label="地址">
+      </el-table-column>
+    </el-table>
     <el-table :data="pagination" border>
-      <el-table-column fixed="left" prop="source" label="试卷名称" width="180"></el-table-column>
-        <el-table-column prop="description" label="介绍" width="200"></el-table-column>
+      <el-table-column fixed prop="source" label="试卷名称" width="180"></el-table-column>
+      <el-table-column prop="description" label="介绍" width="200"></el-table-column>
       <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
       <el-table-column prop="major" label="所属专业" width="200"></el-table-column>
       <el-table-column prop="grade" label="年级" width="100"></el-table-column>
@@ -79,6 +97,7 @@
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -94,16 +113,16 @@ export default {
   created() {
     this.getExamInfo()
   },
-  methods:{
+  methods: {
     // 分页查询所有试卷信息
-    getExamInfo()
-    {
+    getExamInfo() {
       this.$axios({
         url: `/api/exams/${this.pagination.current}/${this.pagination.size}`,
         method: "GET",
       }).then(res => {
         this.pagination = res.data
         console.log(this.pagination)
+        console.log(typeof this.pagination[0])
       }).catch(error => {
         console.log(error)
       })
@@ -111,7 +130,7 @@ export default {
     edit(examCode) { //编辑试卷
       this.dialogVisible = true
       this.$axios(`/api/exam/${examCode}`).then(res => { //根据试卷id请求后台
-        if(res.data.code == 200) {
+        if (res.data.code == 200) {
           this.form = res.data.data
         }
       })
@@ -120,7 +139,8 @@ export default {
       this.$confirm('确认关闭？')
           .then(_ => {
             done();
-          }).catch(_ => {});
+          }).catch(_ => {
+      });
     },
     submit() { //提交修改后的试卷信息
       this.dialogVisible = false
@@ -131,7 +151,7 @@ export default {
           ...this.form
         }
       }).then(res => {
-        if(res.data.code == 200) {
+        if (res.data.code == 200) {
           this.$message({ //成功修改提示
             message: '更新成功',
             type: 'success'
@@ -141,11 +161,11 @@ export default {
       })
     },
     deleteRecord(examCode) {
-      this.$confirm("确定删除该记录吗,该操作不可逆！！！","删除提示",{
+      this.$confirm("确定删除该记录吗,该操作不可逆！！！", "删除提示", {
         confirmButtonText: '确定删除',
         cancelButtonText: '算了,留着',
         type: 'danger'
-      }).then(()=> { //确认删除
+      }).then(() => { //确认删除
         this.$axios({
           url: `/api/exam/${examCode}`,
           method: 'delete',
