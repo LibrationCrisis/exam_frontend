@@ -20,20 +20,20 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="pagination.current"
-      :page-sizes="[4, 8, 10, 20]"
-      :page-size="pagination.size"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total" class="page">
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.current"
+        :page-sizes="[4, 8, 10, 20]"
+        :page-size="pagination.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pagination.total" class="page">
     </el-pagination>
     <!-- 编辑对话框-->
     <el-dialog
-      title="编辑试卷信息"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
+        title="编辑试卷信息"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
       <section class="update">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="试卷名称">
@@ -53,7 +53,8 @@
           </el-form-item>
           <el-form-item label="考试日期">
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.examDate" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择日期" v-model="form.examDate"
+                              style="width: 100%;"></el-date-picker>
             </el-col>
           </el-form-item>
           <el-form-item label="持续时间">
@@ -77,7 +78,39 @@
     </el-dialog>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      form: {}, //保存点击以后当前试卷的信息
+      pagination: { //分页后的考试信息
+        current: 1, //当前页
+        total: null, //记录条数
+        size: 4, //每页条数
+      },
+      dialogVisible: false
+    }
+  },
+  created() {
+    this.getExamInfo()
+  },
+  methods:{
+    // 分页查询所有试卷信息
+    getExamInfo()
+    {
+      this.$axios({
+        url: `/api/exams/${this.pagination.current}/${this.pagination.size}`,
+        method: "GET",
 
+      }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+  }
+}
+</script>
 <!--<script>-->
 <!--export default {-->
 <!--  data() {-->
@@ -165,13 +198,15 @@
 <style lang="scss" scoped>
 .exam {
   padding: 0px 40px;
+
   .page {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .edit{
+
+  .edit {
     margin-left: 20px;
   }
 }
