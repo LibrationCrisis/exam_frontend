@@ -49,6 +49,7 @@
 import store from '@/vuex/store'
 import {mapState} from 'vuex'
 import qs from 'qs'
+import * as successResponse from "browserslist";
 
 export default {
   store,
@@ -60,6 +61,9 @@ export default {
       formLabelAlign: {
         username: '20154084',
         password: '123456'
+      },
+      json: {
+        type:Array
       }
     }
   },
@@ -80,46 +84,56 @@ export default {
         method: 'post',
         data: qs.stringify(this.formLabelAlign)
       }).then(res => {
-        console.log(res)
+        // console.log(res)
+        // // const jsonObj = JSON.parse(JSON.stringify(successResponse.data.data));
+        // // console.log(jsonObj);
+        if (this.formLabelAlign.username == res.data.id && this.formLabelAlign.password == res.data.password)
+        console.log(res.data.id);
+        this.$router.push({path: '/teacher'}) //跳转到首页
+      }).catch(error =>{
+        console.log(error)
       })
 
-      /*this.$axios({
-        url: '/api/login',
-        method: 'post',
-        data: {
-          ...this.formLabelAlign
-        }
-      }).then(res => {
-        let resData = res.data.data
-        if (resData != null) {
-          switch (resData.role) {
-            /!*case "0":  //管理员
-              this.$cookies.set("cname", resData.adminName)
-              this.$cookies.set("cid", resData.adminId)
-              this.$cookies.set("role", 0)
-              this.$router.push({path: '/index'}) //跳转到首页
-              break*!/
-            // case "1": //教师
-            //   this.$cookies.set("cname", resData.teacherName)
-            //   this.$cookies.set("cid", resData.teacherId)
-            //   this.$cookies.set("role", 1)
-            //   this.$router.push({path: '/index'}) //跳转到教师用户
-            //   break
-            // case "2": //学生
-            //   this.$cookies.set("cname", resData.studentName)
-            //   this.$cookies.set("cid", resData.studentId)
-            //   this.$router.push({path: '/student'})
-            //   break
-          }
-        }
-        if (resData == null) { //错误提示
-          this.$message({
-            showClose: true,
-            type: 'error',
-            message: '用户名或者密码错误'
-          })
-        }
-      })*/
+
+
+
+        // this.$axios({
+      //   url: '/api/login',
+      //   method: 'post',
+      //   data: {
+      //     ...this.formLabelAlign
+      //   }
+      // }).then(res => {
+      //   let resData = res.data.data
+      //   if (resData != null) {
+      //     switch (resData.role) {
+      //       /*case "0":  //管理员
+      //         this.$cookies.set("cname", resData.adminName)
+      //         this.$cookies.set("cid", resData.adminId)
+      //         this.$cookies.set("role", 0)
+      //         this.$router.push({path: '/index'}) //跳转到首页
+      //         break*/
+      //       case "1": //教师
+      //         this.$cookies.set("cname", resData.teacherName)
+      //         this.$cookies.set("cid", resData.teacherId)
+      //         this.$cookies.set("role", 1)
+      //         this.$router.push({path: '/index'}) //跳转到教师用户
+      //         break
+      //       case "2": //学生
+      //         this.$cookies.set("cname", resData.studentName)
+      //         this.$cookies.set("cid", resData.studentId)
+      //         this.$router.push({path: '/student'})
+      //         break
+      //     }
+      //   }
+      //   if (resData == null) { //错误提示
+      //     this.$message({
+      //       showClose: true,
+      //       type: 'error',
+      //       message: '用户名或者密码错误'
+      //     })
+      //   }
+      // })
     },
     clickTag(key) {
       this.role = key
