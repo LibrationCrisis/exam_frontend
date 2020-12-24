@@ -71,7 +71,7 @@ export default {
     //用户登录请求后台处理
     login() {
       console.log("登录操作执行-------");
-      this.$router.push({path: '/teacher'}) //跳转到首页
+      // this.$router.push({path: '/teacher'}) //跳转到首页
       /*this.$axios.get('/api/login')
           .then(function (response) {
             console.log(response.data)
@@ -84,12 +84,33 @@ export default {
         method: 'POST',
         data: qs.stringify(this.formLabelAlign)
       }).then(res => {
-        // console.log(res)
-        // // const jsonObj = JSON.parse(JSON.stringify(successResponse.data.data));
-        // // console.log(jsonObj);
-        if (this.formLabelAlign.username == res.data.id && this.formLabelAlign.password == res.data.password)
+        console.log(res)
+        console.log(res.data.role)
+        //判断用户名和密码是否存在数据库中
+        if (this.formLabelAlign.username == res.data.student_id || this.formLabelAlign.username == res.data.teacher_id) {
+          // if (res.data.role == 1) {
+          //   console.log('res1')
+          //   this.$router.push({path: '/teacher'});
+          // }
+          // if (res.data.role == 2) {
+          //   console.log('res2')
+          //   this.$router.push({path: '/student'});
+          // }
+          //判断是教师还是学生
+          switch (res.data.role) {
+            case "1": //教师
+              // console.log('res1')
+              this.$router.push({path: '/teacher'})
+              break
+            case "2": //学生
+              // console.log('res2')
+              this.$router.push({path: '/student'})
+              break
+          }
+          console.log(res.data.id)
+        }
         console.log(res.data.id);
-        this.$router.push({path: '/student'}) //跳转到首页
+        // this.$router.push({path: '/student'}) //跳转到首页
       }).catch(error =>{
         console.log(error)
       })
