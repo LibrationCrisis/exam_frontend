@@ -1,26 +1,8 @@
 //查询所有考试
 <template>
   <div class="exam">
-    <el-table
-        :data="pagination"
-        style="width: 100%">
-      <el-table-column
-          prop="major"
-          label="日期"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="institute"
-          label="姓名"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="source"
-          label="地址">
-      </el-table-column>
-    </el-table>
     <el-table :data="pagination" border>
-      <el-table-column fixed prop="source" label="试卷名称" width="180"></el-table-column>
+      <el-table-column prop="source" label="试卷名称" width="180"></el-table-column>
       <el-table-column prop="description" label="介绍" width="200"></el-table-column>
       <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
       <el-table-column prop="major" label="所属专业" width="200"></el-table-column>
@@ -30,7 +12,7 @@
       <el-table-column prop="totalScore" label="总分" width="120"></el-table-column>
       <el-table-column prop="type" label="试卷类型" width="120"></el-table-column>
       <el-table-column prop="tips" label="考生提示" width="400"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="edit(scope.row.examCode)" type="primary" size="small">编辑</el-button>
           <el-button @click="deleteRecord(scope.row.examCode)" type="danger" size="small">删除</el-button>

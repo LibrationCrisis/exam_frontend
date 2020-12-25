@@ -59,7 +59,7 @@ export default {
       role: 2,
       labelPosition: 'left',
       formLabelAlign: {
-        username: '20154084',
+        username: '20155008',
         password: '123456'
       },
       json: {
@@ -104,6 +104,8 @@ export default {
               break
             case "2": //学生
               // console.log('res2')
+              this.$cookies.set("cname", res.data.student_name)
+              this.$cookies.set("cid", res.data.student_id)
               this.$router.push({path: '/student'})
               break
           }
