@@ -140,351 +140,391 @@
   </div>
 </template>
 
-<!--<script>-->
-<!--import store from '@/vuex/store'-->
-<!--import {mapState} from 'vuex'-->
-<!--export default {-->
-<!--  store,-->
-<!--  data() {-->
-<!--    return {-->
-<!--      startTime: null, //考试开始时间-->
-<!--      endTime: null, //考试结束时间-->
-<!--      time: null, //考试持续时间-->
-<!--      reduceAnswer:[],  //vue官方不支持3层以上数据嵌套,如嵌套则会数据渲染出现问题,此变量直接接收3层嵌套时的数据。-->
-<!--      answerScore: 0, //答题总分数-->
-<!--      bg_flag: false, //已答标识符,已答改变背景色-->
-<!--      isFillClick: false, //选择题是否点击标识符-->
-<!--      slider_flag: true, //左侧显示隐藏标识符-->
-<!--      flag: false, //个人信息显示隐藏标识符-->
-<!--      currentType: 1, //当前题型类型  1&#45;&#45;选择题  2&#45;&#45;填空题  3&#45;&#45;判断题-->
-<!--      radio: [], //保存考生所有选择题的选项-->
-<!--      title: "请选择正确的选项",-->
-<!--      index: 0, //全局index-->
-<!--      userInfo: { //用户信息-->
-<!--        name: null,-->
-<!--        id: null-->
-<!--      },-->
-<!--      topicCount: [],//每种类型题目的总数-->
-<!--      score: [],  //每种类型分数的总数-->
-<!--      examData: { //考试信息-->
-<!--        // source: null,-->
-<!--        // totalScore: null,-->
-<!--      },-->
-<!--      topic: {  //试卷信息-->
+<script>
+import store from '@/vuex/store'
+import {mapState} from 'vuex'
+export default {
+  store,
+  data() {
+    return {
+      startTime: null, //考试开始时间
+      endTime: null, //考试结束时间
+      time: null, //考试持续时间
+      reduceAnswer:[],  //vue官方不支持3层以上数据嵌套,如嵌套则会数据渲染出现问题,此变量直接接收3层嵌套时的数据。
+      answerScore: 0, //答题总分数
+      bg_flag: false, //已答标识符,已答改变背景色
+      isFillClick: false, //选择题是否点击标识符
+      slider_flag: true, //左侧显示隐藏标识符
+      flag: false, //个人信息显示隐藏标识符
+      currentType: 1, //当前题型类型  1--选择题  2--填空题  3--判断题
+      radio: [], //保存考生所有选择题的选项
+      title: "请选择正确的选项",
+      index: 0, //全局index
+      userInfo: { //用户信息
+        name: null,
+        id: null
+      },
+      topicCount: [],//每种类型题目的总数
+      score: [],  //每种类型分数的总数
+      examData: { //考试信息
+        // source: null,
+        // totalScore: null,
+      },
+      topic: {  //试卷信息
 
-<!--      },-->
-<!--      showQuestion: [], //当前显示题目信息-->
-<!--      showAnswer: {}, //当前题目对应的答案选项-->
-<!--      number: 1, //题号-->
-<!--      part: null, //填空题的空格数量-->
-<!--      fillAnswer: [[]], //二维数组保存所有填空题答案-->
-<!--      judgeAnswer: [], //保存所有判断题答案-->
-<!--      topic1Answer: [],  //学生选择题作答编号,-->
-<!--      rightAnswer: ''-->
-<!--    }-->
-<!--  },-->
-<!--  created() {-->
-<!--    this.getCookies()-->
-<!--    this.getExamData()-->
-<!--    this.showTime()-->
-<!--  },-->
-<!--  methods: {-->
-<!--    getTime(date) { //日期格式化-->
-<!--      let year = date.getFullYear()-->
-<!--      let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;-->
-<!--      let day=date.getDate() < 10 ? "0" + date.getDate() : date.getDate();-->
-<!--      let hours=date.getHours() < 10 ? "0" + date.getHours() : date.getHours();-->
-<!--      let minutes=date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();-->
-<!--      let seconds=date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();-->
-<!--      // 拼接-->
-<!--      return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;-->
-<!--    },-->
-<!--    getCookies() {  //获取cookie-->
-<!--      this.userInfo.name = this.$cookies.get("cname")-->
-<!--      this.userInfo.id = this.$cookies.get("cid")-->
-<!--    },-->
-<!--    calcuScore() { //计算答题分数-->
-<!--      -->
-<!--    },-->
-<!--    getExamData() { //获取当前试卷所有信息-->
-<!--      let date = new Date()-->
-<!--      this.startTime = this.getTime(date)-->
-<!--      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号-->
-<!--      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息-->
-<!--        this.examData = { ...res.data.data} //获取考试详情-->
-<!--        this.index = 0-->
-<!--        this.time = this.examData.totalScore //获取分钟数-->
-<!--        let paperId = this.examData.paperId-->
-<!--        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息-->
-<!--          this.topic = {...res.data}-->
-<!--          let reduceAnswer = this.topic[1][this.index]-->
-<!--          this.reduceAnswer = reduceAnswer-->
-<!--          let keys = Object.keys(this.topic) //对象转数组-->
-<!--          keys.forEach(e => {-->
-<!--            let data = this.topic[e]-->
-<!--            this.topicCount.push(data.length)-->
-<!--            let currentScore = 0-->
-<!--            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分-->
-<!--              currentScore += data[i].score-->
-<!--            }-->
-<!--            this.score.push(currentScore) //把每种题型总分存入score-->
-<!--          })-->
-<!--          let len = this.topicCount[1]-->
-<!--          let father = []-->
-<!--          for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案-->
-<!--            let children = [null,null,null,null]-->
-<!--            father.push(children)-->
-<!--          }-->
-<!--          this.fillAnswer = father-->
-<!--          let dataInit = this.topic[1]-->
-<!--          this.number = 1-->
-<!--          this.showQuestion = dataInit[0].question-->
-<!--          this.showAnswer = dataInit[0]-->
-<!--        })-->
-<!--      })-->
-<!--    },-->
-<!--    change(index) { //选择题-->
-<!--      this.index = index-->
-<!--      let reduceAnswer = this.topic[1][this.index]-->
-<!--      this.reduceAnswer = reduceAnswer-->
-<!--      this.isFillClick = true-->
-<!--      this.currentType = 1-->
-<!--      let len = this.topic[1].length-->
-<!--      if(this.index < len) {-->
-<!--        if(this.index <= 0){-->
-<!--          this.index = 0-->
-<!--        }-->
-<!--        console.log(`总长度${len}`)-->
-<!--        console.log(`当前index:${index}`)-->
-<!--        this.title = "请选择正确的选项"-->
-<!--        let Data = this.topic[1]-->
-<!--        // console.log(Data)-->
-<!--        this.showQuestion = Data[this.index].question //获取题目信息-->
-<!--        this.showAnswer = Data[this.index]-->
-<!--        this.number = this.index + 1-->
-<!--      }else if(this.index >= len) {-->
-<!--        this.index = 0-->
-<!--        this.fill(this.index)-->
-<!--      }-->
-<!--    },-->
-<!--    fillBG() { //填空题已答题目 如果已答该题目,设置第四个元素为true为标识符-->
-<!--      if(this.fillAnswer[this.index][0] != null) {-->
-<!--        this.fillAnswer[this.index][3] = true-->
-<!--      }-->
-<!--    },-->
-<!--    fill(index) { //填空题-->
-<!--      let len = this.topic[2].length-->
-<!--      this.currentType = 2-->
-<!--      this.index = index-->
-<!--      if(index < len) {-->
-<!--        if(index < 0) {-->
-<!--          index = this.topic[1].length -1-->
-<!--          this.change(index)-->
-<!--        }else {-->
-<!--          console.log(`总长度${len}`)-->
-<!--          console.log(`当前index:${index}`)-->
-<!--          this.title = "请在横线处填写答案"-->
-<!--          let Data = this.topic[2]-->
-<!--          console.log(Data)-->
-<!--          this.showQuestion = Data[index].question //获取题目信息-->
-<!--          let part= this.showQuestion.split("()").length -1 //根据题目中括号的数量确定填空横线数量-->
-<!--          this.part = part-->
-<!--          this.number = this.topicCount[0] + index + 1-->
-<!--        } -->
-<!--      }else if(index >= len) {-->
-<!--        this.index = 0-->
-<!--        this.judge(this.index)-->
-<!--      }-->
-<!--    },-->
-<!--    judge(index) { //判断题-->
-<!--      let len = this.topic[3].length-->
-<!--      this.currentType = 3-->
-<!--      this.index = index-->
-<!--      if(this.index < len) {-->
-<!--        if(this.index < 0){-->
-<!--          this.index = this.topic[2].length - 1-->
-<!--          this.fill(this.index)-->
-<!--        }else {-->
-<!--          console.log(`总长度${len}`)-->
-<!--          console.log(`当前index:${this.index}`)-->
-<!--          this.title = "请作出正确判断"-->
-<!--          let Data = this.topic[3]-->
-<!--          console.log(Data)-->
-<!--          this.showQuestion = Data[index].question //获取题目信息-->
-<!--          this.number = this.topicCount[0] + this.topicCount[1] + index + 1-->
-<!--        }-->
-<!--      }else if (this.index >= len) {-->
-<!--        this.index = 0-->
-<!--        this.change(this.index)-->
-<!--      }-->
-<!--    },-->
-<!--    getChangeLabel(val) { //获取选择题作答选项-->
-<!--      this.radio[this.index] = val //当前选择的序号-->
-<!--      if(val) {-->
-<!--        let data = this.topic[1]-->
-<!--        this.bg_flag = true-->
-<!--        data[this.index]["isClick"] = true-->
-<!--      }-->
-<!--      /* 保存学生答题选项 */-->
-<!--      this.topic1Answer[this.index] = val -->
-<!--    },-->
-<!--    getJudgeLabel(val) {  //获取判断题作答选项-->
-<!--      this.judgeAnswer[this.index] = val-->
-<!--      if(val) {-->
-<!--        let data = this.topic[3]-->
-<!--        this.bg_flag = true-->
-<!--        data[this.index]["isClick"] = true-->
-<!--      }-->
-<!--    },-->
-<!--    previous() { //上一题-->
-<!--      this.index &#45;&#45;-->
-<!--      switch(this.currentType) {-->
-<!--        case 1: -->
-<!--          this.change(this.index)-->
-<!--          break-->
-<!--        case 2: -->
-<!--          this.fill(this.index)-->
-<!--          break-->
-<!--        case 3:-->
-<!--          this.judge(this.index)-->
-<!--          break-->
-<!--      }-->
-<!--    },-->
-<!--    next() { //下一题-->
-<!--      this.index ++-->
-<!--      switch(this.currentType) {-->
-<!--        case 1: -->
-<!--          this.change(this.index)-->
-<!--          break-->
-<!--        case 2: -->
-<!--          this.fill(this.index)-->
-<!--          break-->
-<!--        case 3:-->
-<!--          this.judge(this.index)-->
-<!--          break-->
-<!--      }-->
-<!--    },-->
-<!--    mark() { //标记功能-->
-<!--      switch(this.currentType) {-->
-<!--        case 1:-->
-<!--          this.topic[1][this.index]["isMark"] = true //选择题标记-->
-<!--          break-->
-<!--        case 2:-->
-<!--          this.topic[2][this.index]["isMark"] = true //填空题标记-->
-<!--          break-->
-<!--        case 3:-->
-<!--          this.topic[3][this.index]["isMark"] = true //判断题标记-->
-<!--      }-->
-<!--    },-->
-<!--    commit() { //答案提交计算分数-->
-<!--      /* 计算选择题总分 */-->
-<!--      let topic1Answer = this.topic1Answer-->
-<!--      let finalScore = 0-->
-<!--      topic1Answer.forEach((element,index) => { //循环每道选择题根据选项计算分数-->
-<!--        let right = null-->
-<!--        if(element != null) {-->
-<!--          switch(element) { //选项1,2,3,4 转换为 "A","B","C","D"-->
-<!--            case 1:-->
-<!--              right = "A"-->
-<!--              break-->
-<!--            case 2:-->
-<!--              right = "B"-->
-<!--              break-->
-<!--            case 3:-->
-<!--              right = "C"-->
-<!--              break-->
-<!--            case 4:-->
-<!--              right = "D"-->
-<!--          }-->
-<!--          if(right == this.topic[1][index].rightAnswer) { // 当前选项与正确答案对比-->
-<!--            finalScore += this.topic[1][index].score // 计算总分数-->
-<!--          }-->
-<!--          console.log(right,this.topic[1][index].rightAnswer)-->
-<!--        }-->
-<!--        // console.log(topic1Answer)-->
-<!--      })-->
-<!--      /**计算判断题总分 */-->
-<!--      // console.log(`this.fillAnswer${this.fillAnswer}`)-->
-<!--      // console.log(this.topic[2][this.index])-->
-<!--      let fillAnswer = this.fillAnswer-->
-<!--      fillAnswer.forEach((element,index) => { //此处index和 this.index数据不一致，注意-->
-<!--        element.forEach((inner) => {-->
-<!--          if(this.topic[2][index].answer.includes(inner)) { //判断填空答案是否与数据库一致-->
-<!--            console.log("正确")-->
-<!--            finalScore += this.topic[2][this.index].score-->
-<!--          }-->
-<!--        })-->
-<!--      });-->
-<!--      /** 计算判断题总分 */-->
-<!--      let topic3Answer = this.judgeAnswer-->
-<!--      topic3Answer.forEach((element,index) => {-->
-<!--        let right = null-->
-<!--        switch(element) {-->
-<!--          case 1:-->
-<!--            right = "T"-->
-<!--            break-->
-<!--          case 2:-->
-<!--            right = "F"-->
-<!--        }-->
-<!--        if(right == this.topic[3][index].answer) { // 当前选项与正确答案对比-->
-<!--            finalScore += this.topic[3][index].score // 计算总分数-->
-<!--          }-->
-<!--      })-->
-<!--      console.log(`目前总分${finalScore}`)-->
-<!--      if(this.time != 0) {-->
-<!--        this.$confirm("考试结束时间未到,是否提前交卷","友情提示",{-->
-<!--          confirmButtonText: '立即交卷',-->
-<!--          cancelButtonText: '再检查一下',-->
-<!--          type: 'warning'-->
-<!--        }).then(() => {-->
-<!--          console.log("交卷")-->
-<!--          let date = new Date()-->
-<!--          this.endTime = this.getTime(date)-->
-<!--          let answerDate = this.endTime.substr(0,10)-->
-<!--          //提交成绩信息-->
-<!--          this.$axios({-->
-<!--            url: '/api/score',-->
-<!--            method: 'post',-->
-<!--            data: {-->
-<!--              examCode: this.examData.examCode, //考试编号-->
-<!--              studentId: this.userInfo.id, //学号-->
-<!--              subject: this.examData.source, //课程名称-->
-<!--              etScore: finalScore, //答题成绩-->
-<!--              answerDate: answerDate, //答题日期-->
-<!--            }-->
-<!--          }).then(res => {-->
-<!--            if(res.data.code == 200) {-->
-<!--              this.$router.push({path:'/studentScore',query: {-->
-<!--                score: finalScore, -->
-<!--                startTime: this.startTime,-->
-<!--                endTime: this.endTime-->
-<!--              }})-->
-<!--            }  -->
-<!--          })-->
-<!--        }).catch(() => {-->
-<!--          console.log("继续答题")-->
-<!--        })-->
-<!--      }-->
-<!--    },-->
-<!--    showTime() { //倒计时-->
-<!--      setInterval(() => {-->
-<!--        this.time -= 1-->
-<!--        if(this.time == 10) {-->
-<!--          this.$message({-->
-<!--            showClose: true,-->
-<!--            type: 'error',-->
-<!--            message: '考生注意,考试时间还剩10分钟！！！'-->
-<!--          })-->
-<!--          if(this.time == 0) {-->
-<!--            console.log("考试时间已到,强制交卷。")-->
-<!--          }-->
-<!--        }-->
-<!--      },1000 * 60)-->
-<!--    }-->
-<!--  },-->
-<!--  computed:mapState(["isPractice"])-->
-<!--}-->
-<!--</script>-->
+      },
+      showQuestion: [], //当前显示题目信息
+      showAnswer: {}, //当前题目对应的答案选项
+      number: 1, //题号
+      part: null, //填空题的空格数量
+      fillAnswer: [[]], //二维数组保存所有填空题答案
+      judgeAnswer: [], //保存所有判断题答案
+      topic1Answer: [],  //学生选择题作答编号,
+      rightAnswer: ''
+    }
+  },
+  created() {
+    this.getCookies()
+    this.getExamData()
+    this.showTime()
+  },
+  methods: {
+    getTime(date) { //日期格式化
+      let year = date.getFullYear()
+      let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+      let day=date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      let hours=date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      let minutes=date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      let seconds=date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+      // 拼接
+      return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+    },
+    getCookies() {  //获取cookie
+      this.userInfo.name = this.$cookies.get("cname")
+      this.userInfo.id = this.$cookies.get("cid")
+    },
+    calcuScore() { //计算答题分数
+
+    },
+    getExamData() { //获取当前试卷所有信息
+      // let date = new Date()
+      // this.startTime = this.getTime(date)
+      // let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
+      // this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
+      //   this.examData = { ...res.data.data} //获取考试详情
+      //   this.index = 0
+      //   this.time = this.examData.totalScore //获取分钟数
+      //   let paperId = this.examData.paperId
+      //   this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
+      //     this.topic = {...res.data}
+      //     let reduceAnswer = this.topic[1][this.index]
+      //     this.reduceAnswer = reduceAnswer
+      //     let keys = Object.keys(this.topic) //对象转数组
+      //     keys.forEach(e => {
+      //       let data = this.topic[e]
+      //       this.topicCount.push(data.length)
+      //       let currentScore = 0
+      //       for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
+      //         currentScore += data[i].score
+      //       }
+      //       this.score.push(currentScore) //把每种题型总分存入score
+      //     })
+      //     let len = this.topicCount[1]
+      //     let father = []
+      //     for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
+      //       let children = [null,null,null,null]
+      //       father.push(children)
+      //     }
+      //     this.fillAnswer = father
+      //     let dataInit = this.topic[1]
+      //     this.number = 1
+      //     this.showQuestion = dataInit[0].question
+      //     this.showAnswer = dataInit[0]
+      // })
+      let date = new Date()
+      this.startTime = this.getTime(date)
+      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
+      this.$axios({
+        url: `/api/exam/${examCode}`,
+        method: "GET"
+      }).then(res => {
+            this.examData = res.data
+            // this.loading = false
+            console.log(res)
+            this.index = 0
+            this.time = this.examData.totalTime //获取分钟数
+            let paperId = this.examData.paperId
+            this.$axios(`/api/paper/${paperId}`).then(res => {
+              this.topic = res.data
+              console.log(res)
+              let reduceAnswer = this.topic[1][this.index]
+                  this.reduceAnswer = reduceAnswer
+                  let keys = Object.keys(this.topic) //对象转数组
+                  keys.forEach(e => {
+                    let data = this.topic[e]
+                    this.topicCount.push(data.length)
+                    let currentScore = 0
+                    for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
+                      currentScore += data[i].score
+                    }
+                    this.score.push(currentScore) //把每种题型总分存入score
+                  })
+                  let len = this.topicCount[1]
+                  let father = []
+                  for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
+                    let children = [null,null,null,null]
+                    father.push(children)
+                  }
+                  this.fillAnswer = father
+                  let dataInit = this.topic[1]
+                  this.number = 1
+                  this.showQuestion = dataInit[0].question
+                  this.showAnswer = dataInit[0]
+            })
+      })
+    },
+    change(index) { //选择题
+      this.index = index
+      let reduceAnswer = this.topic[1][this.index]
+      this.reduceAnswer = reduceAnswer
+      this.isFillClick = true
+      this.currentType = 1
+      let len = this.topic[1].length
+      if(this.index < len) {
+        if(this.index <= 0){
+          this.index = 0
+        }
+        console.log(`总长度${len}`)
+        console.log(`当前index:${index}`)
+        this.title = "请选择正确的选项"
+        let Data = this.topic[1]
+        // console.log(Data)
+        this.showQuestion = Data[this.index].question //获取题目信息
+        this.showAnswer = Data[this.index]
+        this.number = this.index + 1
+      }else if(this.index >= len) {
+        this.index = 0
+        this.fill(this.index)
+      }
+    },
+    fillBG() { //填空题已答题目 如果已答该题目,设置第四个元素为true为标识符
+      if(this.fillAnswer[this.index][0] != null) {
+        this.fillAnswer[this.index][3] = true
+      }
+    },
+    fill(index) { //填空题
+      let len = this.topic[2].length
+      this.currentType = 2
+      this.index = index
+      if(index < len) {
+        if(index < 0) {
+          index = this.topic[1].length -1
+          this.change(index)
+        }else {
+          console.log(`总长度${len}`)
+          console.log(`当前index:${index}`)
+          this.title = "请在横线处填写答案"
+          let Data = this.topic[2]
+          console.log(Data)
+          this.showQuestion = Data[index].question //获取题目信息
+          let part= this.showQuestion.split("()").length -1 //根据题目中括号的数量确定填空横线数量
+          this.part = part
+          this.number = this.topicCount[0] + index + 1
+        }
+      }else if(index >= len) {
+        this.index = 0
+        this.judge(this.index)
+      }
+    },
+    judge(index) { //判断题
+      let len = this.topic[3].length
+      this.currentType = 3
+      this.index = index
+      if(this.index < len) {
+        if(this.index < 0){
+          this.index = this.topic[2].length - 1
+          this.fill(this.index)
+        }else {
+          console.log(`总长度${len}`)
+          console.log(`当前index:${this.index}`)
+          this.title = "请作出正确判断"
+          let Data = this.topic[3]
+          console.log(Data)
+          this.showQuestion = Data[index].question //获取题目信息
+          this.number = this.topicCount[0] + this.topicCount[1] + index + 1
+        }
+      }else if (this.index >= len) {
+        this.index = 0
+        this.change(this.index)
+      }
+    },
+    getChangeLabel(val) { //获取选择题作答选项
+      this.radio[this.index] = val //当前选择的序号
+      if(val) {
+        let data = this.topic[1]
+        this.bg_flag = true
+        data[this.index]["isClick"] = true
+      }
+      /* 保存学生答题选项 */
+      this.topic1Answer[this.index] = val
+    },
+    getJudgeLabel(val) {  //获取判断题作答选项
+      this.judgeAnswer[this.index] = val
+      if(val) {
+        let data = this.topic[3]
+        this.bg_flag = true
+        data[this.index]["isClick"] = true
+      }
+    },
+    previous() { //上一题
+      this.index --
+      switch(this.currentType) {
+        case 1:
+          this.change(this.index)
+          break
+        case 2:
+          this.fill(this.index)
+          break
+        case 3:
+          this.judge(this.index)
+          break
+      }
+    },
+    next() { //下一题
+      this.index ++
+      switch(this.currentType) {
+        case 1:
+          this.change(this.index)
+          break
+        case 2:
+          this.fill(this.index)
+          break
+        case 3:
+          this.judge(this.index)
+          break
+      }
+    },
+    mark() { //标记功能
+      switch(this.currentType) {
+        case 1:
+          this.topic[1][this.index]["isMark"] = true //选择题标记
+          break
+        case 2:
+          this.topic[2][this.index]["isMark"] = true //填空题标记
+          break
+        case 3:
+          this.topic[3][this.index]["isMark"] = true //判断题标记
+      }
+    },
+    commit() { //答案提交计算分数
+      /* 计算选择题总分 */
+      let topic1Answer = this.topic1Answer
+      let finalScore = 0
+      topic1Answer.forEach((element,index) => { //循环每道选择题根据选项计算分数
+        let right = null
+        if(element != null) {
+          switch(element) { //选项1,2,3,4 转换为 "A","B","C","D"
+            case 1:
+              right = "A"
+              break
+            case 2:
+              right = "B"
+              break
+            case 3:
+              right = "C"
+              break
+            case 4:
+              right = "D"
+          }
+          if(right == this.topic[1][index].rightAnswer) { // 当前选项与正确答案对比
+            finalScore += this.topic[1][index].score // 计算总分数
+          }
+          console.log(right,this.topic[1][index].rightAnswer)
+        }
+        // console.log(topic1Answer)
+      })
+      /**计算判断题总分 */
+      // console.log(`this.fillAnswer${this.fillAnswer}`)
+      // console.log(this.topic[2][this.index])
+      let fillAnswer = this.fillAnswer
+      fillAnswer.forEach((element,index) => { //此处index和 this.index数据不一致，注意
+        element.forEach((inner) => {
+          if(this.topic[2][index].answer.includes(inner)) { //判断填空答案是否与数据库一致
+            console.log("正确")
+            finalScore += this.topic[2][this.index].score
+          }
+        })
+      });
+      /** 计算判断题总分 */
+      let topic3Answer = this.judgeAnswer
+      topic3Answer.forEach((element,index) => {
+        let right = null
+        switch(element) {
+          case 1:
+            right = "T"
+            break
+          case 2:
+            right = "F"
+        }
+        if(right == this.topic[3][index].answer) { // 当前选项与正确答案对比
+            finalScore += this.topic[3][index].score // 计算总分数
+          }
+      })
+      console.log(`目前总分${finalScore}`)
+      if(this.time != 0) {
+        this.$confirm("考试结束时间未到,是否提前交卷","友情提示",{
+          confirmButtonText: '立即交卷',
+          cancelButtonText: '再检查一下',
+          type: 'warning'
+        }).then(() => {
+          console.log("交卷")
+          let date = new Date()
+          this.endTime = this.getTime(date)
+          let answerDate = this.endTime.substr(0,10)
+          //提交成绩信息
+          this.$axios({
+            url: '/api/score',
+            method: 'post',
+            data: {
+              examCode: this.examData.examCode, //考试编号
+              studentId: this.userInfo.id, //学号
+              subject: this.examData.source, //课程名称
+              etScore: finalScore, //答题成绩
+              answerDate: answerDate, //答题日期
+            }
+          }).then(res => {
+            if(res.data.code == 200) {
+              this.$router.push({path:'/studentScore',query: {
+                score: finalScore,
+                startTime: this.startTime,
+                endTime: this.endTime
+              }})
+            }
+          })
+        }).catch(() => {
+          console.log("继续答题")
+        })
+      }
+    },
+    showTime() { //倒计时
+      setInterval(() => {
+        this.time -= 1
+        if(this.time == 10) {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            message: '考生注意,考试时间还剩10分钟！！！'
+          })
+          if(this.time == 0) {
+            console.log("考试时间已到,强制交卷。")
+          }
+        }
+      },1000 * 60)
+    }
+  },
+  computed:mapState(["isPractice"])
+}
+</script>
 
 <style lang="scss">
 .iconfont.icon-time {
@@ -594,7 +634,7 @@
 }
 .content .topic {
   padding: 20px 0px;
-  padding-top: 30px; 
+  padding-top: 30px;
 }
 .right .content {
   background-color: #fff;
@@ -640,7 +680,7 @@
   cursor: pointer;
   display: inline-block;
   text-align: center;
- background-color: rgb(39, 118, 223);
+  background-color: rgb(39, 118, 223);
   width: 240px;
   margin: 20px 0px 20px 10px;
   border-radius: 4px;
@@ -680,7 +720,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
 }
-.l-bottom .item ul li a { 
+.l-bottom .item ul li a {
   position: relative;
   justify-content: center;
   display: inline-flex;

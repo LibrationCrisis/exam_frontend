@@ -40,7 +40,7 @@
           <el-collapse class="inner">
             <el-collapse-item>
               <template slot="title" name="1">
-                <div class="titlei">选择题 (共{{topicCount[0]}}题 共计{{score[0]}}分)</div>
+                <div class="titlei">选择题 (共{{topic[1].length}}题 共计{{score[0]}}分)</div>
               </template>
               <div class="contenti">
                 <ul class="question" v-for="(list, index) in topic[1]" :key="index">
@@ -50,7 +50,7 @@
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="2">
-                <div class="titlei">填空题 (共{{topicCount[1]}}题  共计{{score[1]}}分)</div>
+                <div class="titlei">填空题 (共{{topic[2].length}}题  共计{{score[1]}}分)</div>
               </template>
               <div class="contenti">
                 <ul class="question" v-for="(list, index) in topic[2]" :key="index">
@@ -60,7 +60,7 @@
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="3">
-                <div class="titlei">判断题 (共{{topicCount[2]}}题 共计{{score[2]}}分)</div>
+                <div class="titlei">判断题 (共{{topic[3].length}}题 共计{{score[2]}}分)</div>
               </template>
               <div class="contenti">
                 <ul class="question" v-for="(list, index) in topic[3]" :key="index">
@@ -109,24 +109,62 @@ export default {
   methods: {
     //初始化页面数据
     init() {
+      // let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
+      // this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
+      //   res.data.data.examDate = res.data.data.examDate.substr(0,10)
+      //   this.examData = { ...res.data.data}
+      //   let paperId = this.examData.paperId
+      //   this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
+      //     this.topic = {...res.data}
+      //     let keys = Object.keys(this.topic) //对象转数组
+      //     keys.forEach(e => {
+      //       let data = this.topic[e]
+      //       this.topicCount.push(data.length)
+      //       let currentScore = 0
+      //       for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
+      //         currentScore += data[i].score
+      //       }
+      //       this.score.push(currentScore) //把每种题型总分存入score
+      //     })
+      //   })
+      // })
       let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-        res.data.data.examDate = res.data.data.examDate.substr(0,10)
-        this.examData = { ...res.data.data}
+      this.$axios({
+        url: `/api/exam/${examCode}`,
+        method: "GET"
+      }).then(res => {
+        this.examData = res.data
+        // this.loading = false
+        console.log(res)
         let paperId = this.examData.paperId
-        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-          this.topic = {...res.data}
-          let keys = Object.keys(this.topic) //对象转数组
-          keys.forEach(e => {
-            let data = this.topic[e]
-            this.topicCount.push(data.length)
-            let currentScore = 0
-            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
-              currentScore += data[i].score
+        this.$axios(`/api/paper/${paperId}`).then(res => {
+          this.topic = res.data
+          console.log(res)
+          let currentScore = 0
+          // for(let i = 1; i< this.topic[1].length; i++) { //循环每种题型,计算出总分
+          //   currentScore += this.topic[1][i].score
+          // }
+          // this.score.push(currentScore) //把每种题型总分存入score
+          // currentScore = 0
+          // for(let i = 1; i< this.topic[2].length; i++) { //循环每种题型,计算出总分
+          //   currentScore += this.topic[2][i].score
+          // }
+          // this.score.push(currentScore) //把每种题型总分存入score
+          // currentScore = 0
+          // for(let i = 1; i< this.topic[3].length; i++) { //循环每种题型,计算出总分
+          //   currentScore += this.topic[3][i].score
+          // }
+          // this.score.push(currentScore) //把每种题型总分存入score
+          for (let i = 1; i < 4; i++) {
+            for (let j = 1; j < this.topic[i].length; j++) {
+              currentScore += this.topic[i][j].score
             }
             this.score.push(currentScore) //把每种题型总分存入score
-          })
+            currentScore = 0
+          }
         })
+      }).catch(error => {
+        console.log(error)
       })
     },
     toAnswer(id) {
