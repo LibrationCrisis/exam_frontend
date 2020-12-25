@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import qs from "qs";
+
 export default {
   data() {
     return {
@@ -40,14 +42,22 @@ export default {
   methods: {
     getAnswerInfo() {
       //分页查询所有试卷信息
-      this.$axios(
-        `/api/answers/${this.pagination.current}/${this.pagination.size}`
-      )
-        .then(res => {
-          this.pagination = res.data.data;
-          console.log(res);
-        })
-        .catch(error => {});
+      // this.$axios(
+      //   `/api/answers/${this.pagination.current}/${this.pagination.size}`
+      // )
+      //   .then(res => {
+      //     this.pagination = res.data.data;
+      //     console.log(res);
+      //   })
+      //   .catch(error => {});
+
+      this.$axios({
+        url: `/api/answers/${this.pagination.current}/${this.pagination.size}`,
+        method: 'GET'
+      }).then(res => {
+        this.pagination = res.data.data;
+        console.log(res);
+      })
     },
     //改变当前记录条数
     handleSizeChange(val) {

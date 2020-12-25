@@ -24,13 +24,18 @@ export default {
   methods: {
     score() {
       let studentId = this.$route.query.studentId
-      this.$axios(`/api/score/${studentId}`).then(res => { //根据学生Id查询成绩
+      this.$axios({
+        url:`/api/score/${studentId}`,
+        method: 'GET'
+      }).then(res => { //根据学生Id查询成绩
         console.log(res)
-        if(res.data.code == 200) {
-          let rootData = res.data.data
+        if(res.status == 200) {
+          let rootData = res.data
+          console.log(rootData)
           rootData.forEach((element,index) => {
+            console.log(element.score)
             this.tableDataX.push(`第${index + 1}次`)
-            this.tableDataY.push(element.etScore)
+            this.tableDataY.push(element.score)
           });
           let boxDom = this.$refs["box"];
           let scoreCharts = this.$echarts.init(boxDom);
@@ -58,6 +63,41 @@ export default {
           this.isNull = true
         }
       })
+      // let studentId = this.$route.query.studentId
+      // this.$axios(`/api/score/${studentId}`).then(res => { //根据学生Id查询成绩
+      //   console.log(res)
+      //   if(res.data.code == 200) {
+      //     let rootData = res.data.data
+      //     rootData.forEach((element,index) => {
+      //       this.tableDataX.push(`第${index + 1}次`)
+      //       this.tableDataY.push(element.etScore)
+      //     });
+      //     let boxDom = this.$refs["box"];
+      //     let scoreCharts = this.$echarts.init(boxDom);
+      //     let option = {
+      //       xAxis: {
+      //         type: "category",
+      //         data: this.tableDataX
+      //       },
+      //       yAxis: {
+      //         type: "value"
+      //       },
+      //       series: [
+      //         {
+      //           data: this.tableDataY,
+      //           type: "line",
+      //           itemStyle: { normal: { label: { show: true } } }
+      //         }
+      //       ]
+      //     };
+      //     scoreCharts.setOption(option);
+      //     scoreCharts.on("mouseover", params => {
+      //       console.log(params.value);
+      //     });
+      //   }else {
+      //     this.isNull = true
+      //   }
+      // })
     }
   }
 };

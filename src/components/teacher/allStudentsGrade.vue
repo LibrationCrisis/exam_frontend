@@ -1,15 +1,15 @@
 // 所有学生
 <template>
   <div class="all">
-    <el-table :data="pagination.records" border>
-      <el-table-column fixed="left" prop="studentName" label="姓名" width="180"></el-table-column>
+    <el-table :data="pagination" border>
+      <el-table-column prop="studentName" label="姓名" width="180"></el-table-column>
       <el-table-column prop="institute" label="学院" width="200"></el-table-column>
       <el-table-column prop="major" label="专业" width="200"></el-table-column>
       <el-table-column prop="grade" label="年级" width="200"></el-table-column>
       <el-table-column prop="clazz" label="班级" width="100"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
       <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>
-      <el-table-column fixed="right" label="查看成绩" width="150">
+      <el-table-column label="查看成绩" width="150">
         <template slot-scope="scope">
           <el-button @click="checkGrade(scope.row.studentId)" type="primary" size="small">查看成绩</el-button>
         </template>
@@ -46,9 +46,16 @@ export default {
   methods: {
     getAnswerInfo() {
       //分页查询所有试卷信息
-      this.$axios(`/api/students/${this.pagination.current}/${this.pagination.size}`).then(res => {
-        this.pagination = res.data.data;
-      }).catch(error => {});
+      // this.$axios(`/api/students/${this.pagination.current}/${this.pagination.size}`).then(res => {
+      //   this.pagination = res.data.data;
+      // }).catch(error => {});
+      this.$axios({
+        url:`/api/students/${this.pagination.current}/${this.pagination.size}`,
+        method: 'GET'
+      }).then(res => {
+        this.pagination = res.data;
+        console.log(this.pagination)
+      }).catch(error => {})
     },
     //改变当前记录条数
     handleSizeChange(val) {

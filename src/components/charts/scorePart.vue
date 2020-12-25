@@ -30,13 +30,17 @@ export default {
     getScoreInfo() {
       let examCode = this.$route.query.examCode
       this.name = this.$route.query.source
-      this.$axios(`/api/scores/${examCode}`).then(res => {
-        let data = res.data.data
+      this.$axios({
+        url: `/api/scores/${examCode}`,
+        method: 'GET'
+      }).then(res => {
+        console.log(res)
+        let data = res.data
         if(data.length > 0) {
           let box = this.$refs['box']
           let charts = this.$echarts.init(box)
           data.forEach(element => {
-            switch(element.etScore / 10) {
+            switch(element.score / 10) {
               case 10:
               case 9:
                 this.category["90分及以上"]++
