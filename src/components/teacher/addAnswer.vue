@@ -47,9 +47,18 @@ export default {
   },
   methods: {
     getExamInfo() { //分页查询所有试卷信息
-      this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
-        this.pagination = res.data.data
+      // this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
+      //   this.pagination = res.data.data
+      // }).catch(error => {
+      // })
+      this.$axios({
+        url: `\`/api/exams/${this.pagination.current}/${this.pagination.size}`,
+        method: "GET",
+      }).then(res => {
+        this.pagination = res.data
+        console.log(this.pagination)
       }).catch(error => {
+        console.log(error)
       })
     },
     //改变当前记录条数

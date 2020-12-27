@@ -99,7 +99,7 @@ export default {
     // 分页查询所有试卷信息
     getExamInfo() {
       this.$axios({
-        url: `/api/exams/${this.pagination.current}/${this.pagination.size}`,
+        url: `/api/exams/${this.pagination.current}/${10}`,
         method: "GET",
       }).then(res => {
         this.pagination = res.data
@@ -112,9 +112,7 @@ export default {
     edit(examCode) { //编辑试卷
       this.dialogVisible = true
       this.$axios(`/api/exam/${examCode}`).then(res => { //根据试卷id请求后台
-        if (res.data.code == 200) {
-          this.form = res.data.data
-        }
+          this.form = res.data
       })
     },
     handleClose(done) { //关闭提醒

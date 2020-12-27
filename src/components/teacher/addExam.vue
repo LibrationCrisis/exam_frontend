@@ -42,65 +42,66 @@
   </section>
 </template>
 
-<!--<script>-->
-<!--export default {-->
-<!--  data() {-->
-<!--    return {-->
-<!--      form: { //表单数据初始化-->
-<!--        source: null,-->
-<!--        description: null,-->
-<!--        institute: null,-->
-<!--        major: null,-->
-<!--        grade: null,-->
-<!--        examDate: null,-->
-<!--        totalTime: null,-->
-<!--        totalScore: null,-->
-<!--        type: null,-->
-<!--        tips: null,-->
-<!--        paperId: null,-->
-<!--      }-->
-<!--    };-->
-<!--  },-->
-<!--  methods: {-->
-<!--    formatTime(date) { //日期格式化-->
-<!--      let year = date.getFullYear()-->
-<!--      let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;-->
-<!--      let day=date.getDate() < 10 ? "0" + date.getDate() : date.getDate();-->
-<!--      let hours=date.getHours() < 10 ? "0" + date.getHours() : date.getHours();-->
-<!--      let minutes=date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();-->
-<!--      let seconds=date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();-->
-<!--      // 拼接-->
-<!--      return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;-->
-<!--    },-->
-<!--    onSubmit() {-->
-<!--      let examDate = this.formatTime(this.form.examDate)-->
-<!--      this.form.examDate = examDate.substr(0,10)-->
-<!--      this.$axios(`/api/examManagePaperId`).then(res => {-->
-<!--        this.form.paperId = res.data.data.paperId + 1 //实现paperId自增1-->
-<!--        this.$axios({-->
-<!--          url: '/api/exam',-->
-<!--          method: 'post',-->
-<!--          data: {-->
-<!--            ...this.form-->
-<!--          }-->
-<!--        }).then(res => {-->
-<!--          if(res.data.code == 200) {-->
-<!--            this.$message({-->
-<!--              message: '数据添加成功',-->
-<!--              type: 'success'-->
-<!--            })-->
-<!--            this.$router.push({path: '/selectExam'})-->
-<!--          }-->
-<!--        })-->
-<!--      })-->
-<!--    },-->
-<!--    cancel() { //取消按钮-->
-<!--      this.form = {}-->
-<!--    },-->
-<!--    -->
-<!--  }-->
-<!--};-->
-<!--</script>-->
+<script>
+export default {
+  data() {
+    return {
+      form: { //表单数据初始化
+        source: null,
+        description: null,
+        institute: null,
+        major: null,
+        grade: null,
+        examDate: null,
+        totalTime: null,
+        totalScore: null,
+        type: null,
+        tips: null,
+        paperId: null,
+      }
+    };
+  },
+  methods: {
+    formatTime(date) { //日期格式化
+      let year = date.getFullYear()
+      let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+      let day=date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      let hours=date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      let minutes=date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      let seconds=date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+      // 拼接
+      return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+    },
+    onSubmit() {
+      let examDate = this.formatTime(this.form.examDate)
+      this.form.examDate = examDate.substr(0,10)
+      this.$axios(`/api/examManagePaperId`).then(res => {
+        this.form.paperId = res.data.data.paperId + 1 //实现paperId自增1
+        this.$axios({
+          url: '/api/exam',
+          method: 'post',
+          data: {
+            ...this.form
+          }
+        }).then(res => {
+          if(res.data.code == 200) {
+            this.$message({
+              message: '数据添加成功',
+              type: 'success'
+            })
+            this.$router.push({path: '/selectExam'})
+          }
+        })
+      })
+    },
+    cancel() { //取消按钮
+      this.form = {}
+    },
+
+  }
+};
+</script>
+
 <style lang="scss" scoped>
 .add {
   padding: 0px 40px;
