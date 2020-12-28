@@ -33,7 +33,8 @@ const routes = [
     {
         path: '/login',
         component: Login
-    }, {
+    },
+    {
         path: '/student',
         component: StudentIndex,
         children:[
@@ -54,10 +55,12 @@ const routes = [
                 component: ScoreTable
             }
         ]
-    },{
+    },
+    {
         path: '/answer',
         component: Answer
-    },{
+    },
+    {
         path: '/teacher',
         component: TeacherIndex,
         children:[

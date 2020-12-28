@@ -1,18 +1,15 @@
 <template>
   <div id="student">
-    <el-row class="padding-50">
+    <el-row class="studentNav">
       <el-col :span="24">
         <ul class="list">
-          <li class="logo"><i class="iconfont icon-kaoshi"></i><span>Exam-Online</span></li>
+          <li class="logo"><span>Exam-Online</span></li>
           <li><a href="javascript:;" @click="exam()">我的试卷</a></li>
-          <!--<li><a href="javascript:;" @click="practice()">我的练习</a></li>-->
           <li><router-link to="/scoreTable">我的分数</router-link></li>
-          <li><router-link to="/message">给我留言</router-link></li>
           <li><a href="javascript:;">待定</a></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
-            <a href="javascript:;"><i class="iconfont icon-Userselect icon"></i>{{user.userName}}</a>
+            <a href="javascript:;">{{user.userName}}</a>
             <div class="msg" v-if="flag">
-              <p @click="manage()">管理中心</p>
               <p class="exit" @click="exit()">退出</p>
             </div>
           </li>
@@ -51,9 +48,7 @@ export default {
       this.$cookies.remove("cname") //清除cookie
       this.$cookies.remove("cid")
     },
-    /*manage() {  //跳转到修改密码页面
-      this.$router.push({path: '/manager'})
-    },*/
+
     userInfo() {
       let studentName = this.$cookies.get("cname")
       let studentId = this.$cookies.get("cid")
@@ -62,18 +57,14 @@ export default {
       this.user.userName = studentName
       this.user.studentId = studentId
     },
-    /*practice() { //跳转练习模式
-      let isPractice = true
-      this.$store.commit("practice", isPractice)
-      this.$router.push({path:'/startExam'})
-    },*/
+
     exam() { //跳转考试模式
       let isPractice = false
       this.$store.commit("practice", isPractice)
       this.$router.push({path:'/student'})
     }
   },
-  computed:mapState(["isPractice"])
+  // computed:mapState(["isPractice"])
 }
 </script>
 
@@ -81,10 +72,11 @@ export default {
 .right .icon {
   margin-right: 6px;
 }
-#student .padding-50 {
+
+.studentNav {
   margin: 0 auto;
-  padding: 0 50px;
-  box-shadow: 0 0 10px 4px rgba(1,149,255,0.1);
+  padding: 0 0px;
+  box-shadow: 5px 5px 5px 3px rgba(1,149,255,0.1);
   background-color: #fff;
 }
 .list a {
@@ -111,6 +103,7 @@ li {
   color: #fff;
 }
 #student .list .right {
+  margin-right: 50px;
   margin-left: auto;
   position: relative;
 }

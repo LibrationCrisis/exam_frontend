@@ -13,7 +13,7 @@
           <el-button type="primary" @click="search()">搜索试卷</el-button>
         </li>
       </ul>
-      <ul class="paper" v-loading="loading">
+      <ul class="paper" v-if="loading">
                 <li class="item" v-for="(item,index) in pagination" :key="index">
                   <h4 @click="toExamMsg(item.examCode)">{{item.source}}</h4>
                   <p class="name">{{item.source}}-{{item.description}}</p>
@@ -54,8 +54,9 @@ export default {
     }
   },
   created() {
+    this.loading = false
     this.getExamInfo()
-    this.loading = true
+
   },
   // watch: {
 
@@ -68,7 +69,7 @@ export default {
         method: "GET"
       }).then(res => {
         this.pagination = res.data
-        this.loading = false
+        this.loading = true
         console.log(this.pagination)
       }).catch(error => {
         console.log(error)
@@ -218,7 +219,8 @@ export default {
   margin: 0 auto;
 }
 #myExam .title {
-  margin: 20px;
+  margin: 0 30px;
+  font-size: 30px;
 }
 #myExam .wrapper {
   background-color: #fff;
