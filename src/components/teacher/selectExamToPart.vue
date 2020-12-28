@@ -1,6 +1,6 @@
 //查询所有考试跳转到分段页面
 <template>
-  <div class="exam" >
+  <div class="exam" v-if="loading">
     <el-table :data="pagination" border>
       <el-table-column prop="source" label="试卷名称" width="180"></el-table-column>
       <el-table-column prop="description" label="介绍" width="200"></el-table-column>
@@ -19,13 +19,13 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="pagination.current"
-      :page-sizes="[4, 8, 10, 20]"
-      :page-size="pagination.size"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total" class="page">
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.current"
+        :page-sizes="[4, 8, 10, 20]"
+        :page-size="pagination.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pagination.total" class="page">
     </el-pagination>
   </div>
 </template>
@@ -34,6 +34,7 @@
 export default {
   data() {
     return {
+      loading: false,
       form: {}, //保存点击以后当前试卷的信息
       pagination: { //分页后的考试信息
         current: 1, //当前页
@@ -57,6 +58,7 @@ export default {
         method: 'GET'
       }).then(res => {
         this.pagination = res.data
+        this.loading = true
         console.log(this.pagination)
       }).catch(error => {
       })
@@ -71,8 +73,8 @@ export default {
       this.pagination.current = val
       this.getExamInfo()
     },
-    toPart(examCode,source) { //跳转到分段charts页面
-      this.$router.push({path: '/scorePart', query:{examCode: examCode, source: source}})
+    toPart(examCode, source) { //跳转到分段charts页面
+      this.$router.push({path: '/scorePart', query: {examCode: examCode, source: source}})
     }
   },
 };
@@ -81,13 +83,15 @@ export default {
 .exam {
   padding: 0px 40px;
   overflow-x: auto;
+
   .page {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .edit{
+
+  .edit {
     margin-left: 20px;
   }
 }

@@ -1,6 +1,6 @@
 //查询所有考试
 <template>
-  <div class="exam">
+  <div class="exam" v-if="loading">
     <el-table :data="pagination" border>
       <el-table-column prop="source" label="试卷名称" width="180"></el-table-column>
       <el-table-column prop="description" label="介绍" width="200"></el-table-column>
@@ -83,6 +83,7 @@
 export default {
   data() {
     return {
+      loading: false,
       form: {}, //保存点击以后当前试卷的信息
       pagination: { //分页后的考试信息
         current: 1, //当前页
@@ -103,6 +104,7 @@ export default {
         method: "GET",
       }).then(res => {
         this.pagination = res.data
+        this.loading = true
         console.log(this.pagination)
         console.log(typeof this.pagination[0])
       }).catch(error => {

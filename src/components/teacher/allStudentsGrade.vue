@@ -1,14 +1,15 @@
 // 所有学生
 <template>
-  <div class="all">
+  <div class="all" v-if="loading">
     <el-table :data="pagination" border>
+      <el-table-column prop="studentId" label="学号" width="180"></el-table-column>
       <el-table-column prop="studentName" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="institute" label="学院" width="200"></el-table-column>
+<!--      <el-table-column prop="institute" label="学院" width="200"></el-table-column>
       <el-table-column prop="major" label="专业" width="200"></el-table-column>
       <el-table-column prop="grade" label="年级" width="200"></el-table-column>
       <el-table-column prop="clazz" label="班级" width="100"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
-      <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>
+      <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>-->
       <el-table-column label="查看成绩" width="150">
         <template slot-scope="scope">
           <el-button @click="checkGrade(scope.row.studentId)" type="primary" size="small">查看成绩</el-button>
@@ -16,14 +17,14 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="pagination.current"
-      :page-sizes="[6, 10]"
-      :page-size="pagination.size"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total"
-      class="page"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.current"
+        :page-sizes="[6, 10]"
+        :page-size="pagination.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pagination.total"
+        class="page"
     ></el-pagination>
   </div>
 </template>
@@ -32,6 +33,7 @@
 export default {
   data() {
     return {
+      loading: false,
       pagination: {
         //分页后的考试信息
         current: 1, //当前页
@@ -50,12 +52,14 @@ export default {
       //   this.pagination = res.data.data;
       // }).catch(error => {});
       this.$axios({
-        url:`/api/students/${this.pagination.current}/${this.pagination.size}`,
+        url: `/api/students/${this.pagination.current}/${this.pagination.size}`,
         method: 'GET'
       }).then(res => {
         this.pagination = res.data;
+        this.loading = true
         console.log(this.pagination)
-      }).catch(error => {})
+      }).catch(error => {
+      })
     },
     //改变当前记录条数
     handleSizeChange(val) {
@@ -68,7 +72,7 @@ export default {
       this.getAnswerInfo();
     },
     checkGrade(studentId) {
-      this.$router.push({ path: "/grade", query: { studentId: studentId } });
+      this.$router.push({path: "/grade", query: {studentId: studentId}});
     }
   }
 };
@@ -76,19 +80,23 @@ export default {
 <style lang="scss" scoped>
 .all {
   padding: 0px 40px;
+
   .page {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .edit {
     margin-left: 20px;
   }
+
   .el-table tr {
     background-color: #dd5862 !important;
   }
 }
+
 .el-table .warning-row {
   background: #000 !important;
 }
