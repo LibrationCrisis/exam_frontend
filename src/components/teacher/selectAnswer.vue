@@ -92,7 +92,7 @@ export default {
     getMultiQuestionInfo() {
       //分页查询选择题试卷信息
       this.$axios({
-        url: `/api/multi-question/${this.multiQuestion.current}/${this.multiQuestion.size}`,
+        url: `/api/multi-question/${this.multiQuestion.current}/${10}`,
         method: 'GET'
       }).then(res => {
         this.multiQuestion = res.data;
@@ -102,7 +102,7 @@ export default {
     getFillQuestionInfo() {
       //分页查询填空题试卷信息
       this.$axios({
-        url: `/api/fill-question/${this.fillQuestion.current}/${this.fillQuestion.size}`,
+        url: `/api/fill-question/${this.fillQuestion.current}/${10}`,
         method: 'GET'
       }).then(res => {
         this.fillQuestion = res.data;
@@ -112,7 +112,7 @@ export default {
     getJudgeQuestionInfo() {
       //分页查询判断题试卷信息
       this.$axios({
-        url: `/api/judge-question/${this.judgeQuestion.current}/${this.judgeQuestion.size}`,
+        url: `/api/judge-question/${this.judgeQuestion.current}/${10}`,
         method: 'GET'
       }).then(res => {
         this.judgeQuestion = res.data;
