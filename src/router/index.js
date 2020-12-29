@@ -17,9 +17,11 @@ const ExamDescription = () => import('@/components/teacher/examDescription')
 const SelectExam = () => import('@/components/teacher/selectExam')
 const AddExam = () => import('@/components/teacher/addExam')
 const AnswerDescription = () => import('@/components/teacher/answerDescription')
-const SelectAnswer = () => import('@/components/teacher/selectAnswer')
 const AddAnswer = () => import('@/components/teacher/addAnswer')
-const AddAnswerChildren =  () => import('@/components/teacher/addAnswerChildren')
+const AddAnswerChildren = () => import('@/components/teacher/addAnswerChildren')
+const MultiQuestion = () => import('@/components/teacher/multiQuestion')
+const FillQuestion = () => import('@/components/teacher/fillQuestion')
+const JudgeQuestion = () => import('@/components/teacher/judgeQuestion')
 
 // 安装插件
 Vue.use(VueRouter)
@@ -37,7 +39,7 @@ const routes = [
     {
         path: '/student',
         component: StudentIndex,
-        children:[
+        children: [
             {
                 path: '/',
                 component: MyExam
@@ -63,7 +65,7 @@ const routes = [
     {
         path: '/teacher',
         component: TeacherIndex,
-        children:[
+        children: [
             {
                 path: '/grade',
                 component: Grade
@@ -97,8 +99,16 @@ const routes = [
                 component: AnswerDescription
             },
             {
-                path: '/selectAnswer', //查询所有题库
-                component: SelectAnswer
+                path: '/multiQuestion', //查询选择题
+                component: MultiQuestion
+            },
+            {
+                path: '/fillQuestion',
+                component: FillQuestion
+            },
+            {
+                path: '/judgeQuestion',
+                component: JudgeQuestion
             },
             {
                 path: '/addAnswer', //增加题库主界面

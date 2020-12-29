@@ -11,19 +11,49 @@ const state = {
         index: '1',
         title: '考试管理',
         icon: 'icon-kechengbiao',
-        content:[{item1:'功能介绍',path:'/examDescription'},{item2:'考试查询',path:'selectExam'},{item3:'添加考试',path:'/addExam'}],
+        content: [{item1: '功能介绍', path: '/examDescription'}, {item2: '考试查询', path: 'selectExam'}, {
+            item3: '添加考试',
+            path: '/addExam'
+        }],
     },
         {
             index: '2',
             title: '题库管理',
             icon: 'icon-tiku',
-            content:[{item1:'功能介绍',path:'/answerDescription'},{item2:'所有题库',path:'/selectAnswer'},{item3:'增加题库',path:'/addAnswer'},{path: '/addAnswerChildren'}],
+            content: [
+                {
+                    item1: '功能介绍',
+                    path: '/answerDescription'
+                },
+                {
+                    item2: '选择题',
+                    path: '/multiQuestion'
+                },
+                {
+                    item3: '填空题',
+                    path: '/fillQuestion'
+                },
+                {
+                    item4: '判断题',
+                    path: '/judgeQuestion'
+                },
+                {
+                    item5: '增加题库',
+                    path: '/addAnswer'
+                },
+                {
+                    path: '/addAnswerChildren'
+                }
+            ],
         },
         {
             index: '3',
             title: '成绩查询',
             icon: 'icon-performance',
-            content:[{item1:'学生成绩查询',path:'/allStudentsGrade'},{path: '/grade'},{item2: '成绩分段查询',path: '/selectExamToPart'},{path: '/scorePart'}],
+            content: [{item1: '学生成绩查询', path: '/allStudentsGrade'}, {path: '/grade'}, {
+                item2: '成绩分段查询',
+                path: '/selectExamToPart'
+            }, {path: '/scorePart'}],
         },
         // {
         //   index: '4',
@@ -46,25 +76,23 @@ const state = {
     ],
 }
 const mutations = {
-    practice(state,status) {
+    practice(state, status) {
         state.isPractice = status
     },
     toggle(state) {
         state.flag = !state.flag
     },
-    changeUserInfo(state,info) {
+    changeUserInfo(state, info) {
         state.userInfo = info
     }
 }
-const getters = {
-
-}
+const getters = {}
 const actions = {
-    getUserInfo(context,info) {
-        context.commit('changeUserInfo',info)
+    getUserInfo(context, info) {
+        context.commit('changeUserInfo', info)
     },
-    getPractice(context,status) {
-        context.commit('practice',status)
+    getPractice(context, status) {
+        context.commit('practice', status)
     }
 }
 export default new VUEX.Store({
