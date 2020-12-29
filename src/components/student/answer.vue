@@ -4,15 +4,7 @@
     <!--顶部信息栏-->
     <div class="top">
       <ul class="item">
-        <li><i class="iconfont icon-menufold icon20" ref="toggle" @click="slider_flag = !slider_flag"></i></li>
         <li>{{ examData.type }}-{{ examData.source }}</li>
-        <li @click="flag = !flag">
-          <i class="iconfont icon-user icon20"></i>
-          <div class="msg" v-if="flag" @click="flag = !flag">
-            <p>姓名：{{ userInfo.name }}</p>
-            <p>准考证号: {{ userInfo.id }}</p>
-          </div>
-        </li>
         <li><i class="iconfont icon-arrLeft icon20"></i></li>
       </ul>
     </div>
@@ -221,44 +213,7 @@ export default {
       this.userInfo.name = this.$cookies.get("cname")
       this.userInfo.id = this.$cookies.get("cid")
     },
-    calcuScore() { //计算答题分数
-
-    },
     getExamData() { //获取当前试卷所有信息
-      // let date = new Date()
-      // this.startTime = this.getTime(date)
-      // let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      // this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-      //   this.examData = { ...res.data.data} //获取考试详情
-      //   this.index = 0
-      //   this.time = this.examData.totalScore //获取分钟数
-      //   let paperId = this.examData.paperId
-      //   this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-      //     this.topic = {...res.data}
-      //     let reduceAnswer = this.topic[1][this.index]
-      //     this.reduceAnswer = reduceAnswer
-      //     let keys = Object.keys(this.topic) //对象转数组
-      //     keys.forEach(e => {
-      //       let data = this.topic[e]
-      //       this.topicCount.push(data.length)
-      //       let currentScore = 0
-      //       for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
-      //         currentScore += data[i].score
-      //       }
-      //       this.score.push(currentScore) //把每种题型总分存入score
-      //     })
-      //     let len = this.topicCount[1]
-      //     let father = []
-      //     for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
-      //       let children = [null,null,null,null]
-      //       father.push(children)
-      //     }
-      //     this.fillAnswer = father
-      //     let dataInit = this.topic[1]
-      //     this.number = 1
-      //     this.showQuestion = dataInit[0].question
-      //     this.showAnswer = dataInit[0]
-      // })
       let date = new Date()
       this.startTime = this.getTime(date)
       let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
@@ -551,10 +506,8 @@ export default {
   color: #2776df;
   margin: 0px 6px 0px 20px;
 }
-
 .analysis {
   margin-top: 20px;
-
   .right {
     color: #2776df;
     font-size: 18px;
@@ -563,22 +516,18 @@ export default {
     border-radius: 4px;
     margin-left: 20px;
   }
-
   ul li:nth-child(2) {
     margin: 20px 0px;
   }
-
   ul li:nth-child(3) {
     padding: 10px;
     background-color: #d3c6c9;
     border-radius: 4px;
   }
 }
-
 .analysis span:nth-child(1) {
   font-size: 18px;
 }
-
 .mark {
   position: absolute;
   width: 4px;
@@ -589,37 +538,30 @@ export default {
   top: 0px;
   left: 22px;
 }
-
 .border {
   position: relative;
   border: 1px solid #FF90AA !important;
 }
-
 .bg {
   background-color: #5188b8 !important;
 }
-
 .fill .el-input {
   display: inline-flex;
   width: 150px;
   margin-left: 20px;
-
   .el-input__inner {
     border: 1px solid transparent;
     border-bottom: 1px solid #eee;
     padding-left: 20px;
   }
 }
-
 /* slider过渡效果 */
 .slider-fade-enter-active {
   transition: all .3s ease;
 }
-
 .slider-fade-leave-active {
   transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-
 .slider-fade-enter, .slider-fade-leave-to {
   transform: translateX(-100px);
   opacity: 0;
@@ -636,26 +578,22 @@ export default {
   height: 50px;
   color: #fff;
 }
-
 .operation .end li {
   cursor: pointer;
   margin: 0 100px;
 }
-
 .operation {
   background-color: #fff;
   border-radius: 4px;
   padding: 10px 0px;
   margin-right: 10px;
 }
-
 .operation .end {
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(39, 118, 223);
 }
-
 .content .number {
   display: inline-flex;
   justify-content: center;
@@ -666,51 +604,41 @@ export default {
   border-radius: 4px;
   margin-right: 4px;
 }
-
 .content {
   padding: 0px 20px;
 }
-
 .content .topic {
   padding: 20px 0px;
   padding-top: 30px;
 }
-
 .right .content {
   background-color: #fff;
   margin: 10px;
   margin-left: 0px;
   height: 470px;
 }
-
 .content .el-radio-group label {
   color: #000;
   margin: 5px 0px;
 }
-
 .content .el-radio-group {
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
 }
-
 .right .title p {
   margin-left: 20px;
 }
-
 .flexarea {
   display: flex;
 }
-
 .flexarea .right {
   flex: 1;
 }
-
 .auto-right {
   margin-left: auto;
   color: #2776df;
   margin-right: 10px;
 }
-
 .right .title {
   margin-right: 10px;
   padding-right: 30px;
@@ -720,11 +648,9 @@ export default {
   height: 50px;
   line-height: 50px;
 }
-
 .clearfix {
   clear: both;
 }
-
 .l-bottom .final {
   cursor: pointer;
   display: inline-block;
@@ -738,17 +664,14 @@ export default {
   color: #fff;
   margin-top: 22px;
 }
-
 #answer .left .item {
   padding: 0px;
   font-size: 16px;
 }
-
 .l-bottom {
   border-radius: 4px;
   background-color: #fff;
 }
-
 .l-bottom .item p {
   margin-bottom: 15px;
   margin-top: 10px;
@@ -756,18 +679,15 @@ export default {
   margin-left: 10px;
   letter-spacing: 2px;
 }
-
 .l-bottom .item li {
   width: 15%;
   margin-left: 5px;
   margin-bottom: 10px;
 }
-
 .l-bottom .item {
   display: flex;
   flex-direction: column;
 }
-
 .l-bottom .item ul {
   width: 100%;
   margin-bottom: -8px;
@@ -775,7 +695,6 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
 }
-
 .l-bottom .item ul li a {
   position: relative;
   justify-content: center;
@@ -790,7 +709,6 @@ export default {
   color: #000;
   font-size: 16px;
 }
-
 .left .l-top {
   display: flex;
   justify-content: space-around;
@@ -800,27 +718,22 @@ export default {
   margin-bottom: 10px;
   background-color: #fff;
 }
-
 .left {
   width: 260px;
   height: 100%;
   margin: 10px 10px 0px 10px;
 }
-
 .left .l-top li:nth-child(2) a {
   border: 1px solid #eee;
 }
-
 .left .l-top li:nth-child(3) a {
   background-color: #5188b8;
   border: none;
 }
-
 .left .l-top li:nth-child(4) a {
   position: relative;
   border: 1px solid #eee;
 }
-
 .left .l-top li:nth-child(4) a::before {
   width: 4px;
   height: 4px;
@@ -831,14 +744,12 @@ export default {
   top: 0px;
   left: 16px;
 }
-
 .left .l-top li {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-
 .left .l-top li a {
   display: inline-block;
   padding: 10px;
@@ -846,34 +757,24 @@ export default {
   background-color: #fff;
   border: 1px solid #FF90AA;
 }
-
 #answer .top {
   background-color: rgb(39, 118, 223);
 }
-
 #answer .item {
   color: #fff;
   display: flex;
   padding: 20px;
   font-size: 20px;
 }
-
 #answer .top .item li:nth-child(1) {
   margin-right: 10px;
 }
-
 #answer .top .item li:nth-child(3) {
   position: relative;
   margin-left: auto;
 }
-
 #answer {
   padding-bottom: 30px;
-}
-
-.icon20 {
-  font-size: 20px;
-  font-weight: bold;
 }
 
 .item .msg {
@@ -883,10 +784,9 @@ export default {
   right: -30px;
   color: #6c757d;
   position: absolute;
-  border: 1px solid rgba(0, 0, 0, .15);
+  border: 1px solid rgba(0,0,0,.15);
   background-color: #fff;
 }
-
 .item .msg p {
   font-size: 16px;
   width: 200px;
