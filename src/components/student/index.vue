@@ -69,9 +69,6 @@ export default {
 </script>
 
 <style lang="scss">
-.right .icon {
-  margin-right: 6px;
-}
 
 .studentNav {
   margin: 0 auto;
@@ -115,9 +112,7 @@ li {
   font-weight: bold;
   color: #2f6c9f;
 }
-#student .list .logo i {
-  font-size: 50px;
-}
+
 .right .msg {
   text-align: center;
   position: absolute;
@@ -132,7 +127,7 @@ li {
 .right .msg p {
   height: 40px;
   line-height: 40px;
-  width: 105px;
+  width: 70px;
 }
 .right .msg p:hover {
   background-color: #0195ff;
