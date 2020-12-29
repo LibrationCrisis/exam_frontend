@@ -60,7 +60,9 @@
                 <li v-for="(list, index3) in topic[3]" :key="index3">
                   <a href="javascript:;" @click="judge(index3)"
                      :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && topic[3][index3].isClick == true}"><span
-                      :class="{'mark': topic[3][index3].isMark == true}"></span>{{ topicCount[0] + topicCount[1] + index3 + 1 }}</a>
+                      :class="{'mark': topic[3][index3].isMark == true}"></span>{{
+                      topicCount[0] + topicCount[1] + index3 + 1
+                    }}</a>
                 </li>
               </ul>
             </div>
@@ -75,7 +77,7 @@
             <p>{{ title }}</p>
             <i class="iconfont icon-right auto-right"></i>
             <span>全卷共{{ topicCount[0] + topicCount[1] + topicCount[2] }}题  <i
-                class="iconfont icon-time"></i>倒计时：<b>{{ time }}</b>分钟</span>
+                class="iconfont icon-time"></i>倒计时：<b>{{ minute }}:{{ second }}</b></span>
           </div>
           <div class="content">
             <p class="topic"><span class="number">{{ number }}</span>{{ showQuestion }}</p>
@@ -159,7 +161,9 @@ export default {
     return {
       startTime: null, //考试开始时间
       endTime: null, //考试结束时间
-      time: null, //考试持续时间
+      minute: null, //考试持续时间
+      second: null,
+      remainTime: null,// 倒计时间总秒数
       reduceAnswer: [],  //vue官方不支持3层以上数据嵌套,如嵌套则会数据渲染出现问题,此变量直接接收3层嵌套时的数据。
       answerScore: 0, //答题总分数
       bg_flag: false, //已答标识符,已答改变背景色
@@ -225,7 +229,7 @@ export default {
         // this.loading = false
         console.log(res)
         this.index = 0
-        this.time = this.examData.totalTime //获取分钟数
+        this.remainTime = this.examData.totalTime * 60
         let paperId = this.examData.paperId
         this.$axios(`/api/paper/${paperId}`).then(res => {
           this.topic = res.data
@@ -444,7 +448,7 @@ export default {
         }
       })
       console.log(`目前总分${finalScore}`)
-      if (this.time != 0) {
+      if (this.remainTime != 0) {
         this.$confirm("考试结束时间未到,是否提前交卷", "友情提示", {
           confirmButtonText: '立即交卷',
           cancelButtonText: '再检查一下',
@@ -483,18 +487,31 @@ export default {
     },
     showTime() { //倒计时
       setInterval(() => {
-        this.time -= 1
-        if (this.time == 10) {
+        if (this.remainTime > 0) {
+          this.remainTime -= 1
+          if (this.remainTime < 60) {
+            this.minute = 0
+            this.second = this.remainTime
+          } else {
+            this.minute = Math.floor(this.remainTime / 60)
+            this.second = this.remainTime - this.minute * 60;
+          }
+        }
+        if (this.remainTime === 600) {
           this.$message({
             showClose: true,
             type: 'error',
             message: '考生注意,考试时间还剩10分钟！！！'
           })
-          if (this.time == 0) {
-            console.log("考试时间已到,强制交卷。")
-          }
         }
-      }, 1000 * 60)
+        if (this.remainTime === 0) {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            message: '考试时间已到,强制交卷。'
+          })
+        }
+      }, 1000)
     }
   },
   computed: mapState(["isPractice"])
@@ -506,8 +523,10 @@ export default {
   color: #2776df;
   margin: 0px 6px 0px 20px;
 }
+
 .analysis {
   margin-top: 20px;
+
   .right {
     color: #2776df;
     font-size: 18px;
@@ -516,18 +535,22 @@ export default {
     border-radius: 4px;
     margin-left: 20px;
   }
+
   ul li:nth-child(2) {
     margin: 20px 0px;
   }
+
   ul li:nth-child(3) {
     padding: 10px;
     background-color: #d3c6c9;
     border-radius: 4px;
   }
 }
+
 .analysis span:nth-child(1) {
   font-size: 18px;
 }
+
 .mark {
   position: absolute;
   width: 4px;
@@ -538,30 +561,37 @@ export default {
   top: 0px;
   left: 22px;
 }
+
 .border {
   position: relative;
   border: 1px solid #FF90AA !important;
 }
+
 .bg {
   background-color: #5188b8 !important;
 }
+
 .fill .el-input {
   display: inline-flex;
   width: 150px;
   margin-left: 20px;
+
   .el-input__inner {
     border: 1px solid transparent;
     border-bottom: 1px solid #eee;
     padding-left: 20px;
   }
 }
+
 /* slider过渡效果 */
 .slider-fade-enter-active {
   transition: all .3s ease;
 }
+
 .slider-fade-leave-active {
   transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
+
 .slider-fade-enter, .slider-fade-leave-to {
   transform: translateX(-100px);
   opacity: 0;
@@ -578,22 +608,26 @@ export default {
   height: 50px;
   color: #fff;
 }
+
 .operation .end li {
   cursor: pointer;
   margin: 0 100px;
 }
+
 .operation {
   background-color: #fff;
   border-radius: 4px;
   padding: 10px 0px;
   margin-right: 10px;
 }
+
 .operation .end {
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(39, 118, 223);
 }
+
 .content .number {
   display: inline-flex;
   justify-content: center;
@@ -604,41 +638,51 @@ export default {
   border-radius: 4px;
   margin-right: 4px;
 }
+
 .content {
   padding: 0px 20px;
 }
+
 .content .topic {
   padding: 20px 0px;
   padding-top: 30px;
 }
+
 .right .content {
   background-color: #fff;
   margin: 10px;
   margin-left: 0px;
   height: 470px;
 }
+
 .content .el-radio-group label {
   color: #000;
   margin: 5px 0px;
 }
+
 .content .el-radio-group {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 }
+
 .right .title p {
   margin-left: 20px;
 }
+
 .flexarea {
   display: flex;
 }
+
 .flexarea .right {
   flex: 1;
 }
+
 .auto-right {
   margin-left: auto;
   color: #2776df;
   margin-right: 10px;
 }
+
 .right .title {
   margin-right: 10px;
   padding-right: 30px;
@@ -648,9 +692,11 @@ export default {
   height: 50px;
   line-height: 50px;
 }
+
 .clearfix {
   clear: both;
 }
+
 .l-bottom .final {
   cursor: pointer;
   display: inline-block;
@@ -664,14 +710,17 @@ export default {
   color: #fff;
   margin-top: 22px;
 }
+
 #answer .left .item {
   padding: 0px;
   font-size: 16px;
 }
+
 .l-bottom {
   border-radius: 4px;
   background-color: #fff;
 }
+
 .l-bottom .item p {
   margin-bottom: 15px;
   margin-top: 10px;
@@ -679,15 +728,18 @@ export default {
   margin-left: 10px;
   letter-spacing: 2px;
 }
+
 .l-bottom .item li {
   width: 15%;
   margin-left: 5px;
   margin-bottom: 10px;
 }
+
 .l-bottom .item {
   display: flex;
   flex-direction: column;
 }
+
 .l-bottom .item ul {
   width: 100%;
   margin-bottom: -8px;
@@ -695,6 +747,7 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
 }
+
 .l-bottom .item ul li a {
   position: relative;
   justify-content: center;
@@ -709,6 +762,7 @@ export default {
   color: #000;
   font-size: 16px;
 }
+
 .left .l-top {
   display: flex;
   justify-content: space-around;
@@ -718,22 +772,27 @@ export default {
   margin-bottom: 10px;
   background-color: #fff;
 }
+
 .left {
   width: 260px;
   height: 100%;
   margin: 10px 10px 0px 10px;
 }
+
 .left .l-top li:nth-child(2) a {
   border: 1px solid #eee;
 }
+
 .left .l-top li:nth-child(3) a {
   background-color: #5188b8;
   border: none;
 }
+
 .left .l-top li:nth-child(4) a {
   position: relative;
   border: 1px solid #eee;
 }
+
 .left .l-top li:nth-child(4) a::before {
   width: 4px;
   height: 4px;
@@ -744,12 +803,14 @@ export default {
   top: 0px;
   left: 16px;
 }
+
 .left .l-top li {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+
 .left .l-top li a {
   display: inline-block;
   padding: 10px;
@@ -757,22 +818,27 @@ export default {
   background-color: #fff;
   border: 1px solid #FF90AA;
 }
+
 #answer .top {
   background-color: rgb(39, 118, 223);
 }
+
 #answer .item {
   color: #fff;
   display: flex;
   padding: 20px;
   font-size: 20px;
 }
+
 #answer .top .item li:nth-child(1) {
   margin-right: 10px;
 }
+
 #answer .top .item li:nth-child(3) {
   position: relative;
   margin-left: auto;
 }
+
 #answer {
   padding-bottom: 30px;
 }
@@ -784,9 +850,10 @@ export default {
   right: -30px;
   color: #6c757d;
   position: absolute;
-  border: 1px solid rgba(0,0,0,.15);
+  border: 1px solid rgba(0, 0, 0, .15);
   background-color: #fff;
 }
+
 .item .msg p {
   font-size: 16px;
   width: 200px;
