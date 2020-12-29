@@ -127,5 +127,11 @@ const router = new VueRouter({
     mode: 'history'
 })
 
+// 解决路由重复点击
+const VueRouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(to) {
+    return VueRouterPush.call(this, to).catch(err => err)
+}
+
 // 导出
 export default router
