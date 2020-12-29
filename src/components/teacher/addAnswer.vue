@@ -22,7 +22,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
-        :page-sizes="[4, 8, 10, 20]"
+        :page-sizes="[10]"
         :page-size="pagination.size"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagination.total" class="page">
@@ -48,12 +48,8 @@ export default {
   },
   methods: {
     getExamInfo() { //分页查询所有试卷信息
-      // this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
-      //   this.pagination = res.data.data
-      // }).catch(error => {
-      // })
       this.$axios({
-        url: `/api/exams/${this.pagination.current}/${this.pagination.size}`,
+        url: `/api/exams/${this.pagination.current}/${10}`,
         method: "GET",
       }).then(res => {
         this.pagination = res.data

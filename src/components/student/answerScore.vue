@@ -2,25 +2,16 @@
   <div class="score">
     <div class="title">
       <p class="name">计算机网络</p>
-      <p class="description">(总分：100分,限时：100分钟)</p>
-      <p class="description">学生：大咸鱼</p>
     </div>
     <div class="total">
       <div class="look">
         本次考试成绩
       </div>
       <div class="show">
-        <div class="img1" :class="{'img1Transform': imgShow}">
-          <img :src="imgSrc.fail1" alt="哭了" v-if="score < 60">
-          <img :src="imgSrc.pass1" alt="过了" v-if="score >= 60">
-        </div>
+
         <div class="number" :class="{'border': isTransition}">
           <span>{{score}}</span>
           <span>分数</span>
-        </div>
-        <div class="img2" :class="{'img2Transform': imgShow}">
-          <img :src="imgSrc.fail2" alt="哭了" v-if="score < 60">
-          <img :src="imgSrc.pass2" alt="过了" v-if="score >= 60">
         </div>
       </div>
       <ul class="time">
@@ -37,13 +28,6 @@ export default {
     return {
       isTransition: false, //是否渲染完成
       score: 0, //总分
-      imgShow: false, //不及格图片显示
-      imgSrc: {
-        fail1: require("@/assets/img/cry1.gif"),
-        fail2: require('@/assets/img/cry2.jpg'),
-        pass1: require('@/assets/img/good1.jpg'),
-        pass2: require('@/assets/img/good2.gif')
-      },
       startTime: null, //考试开始时间
       endTime: null, //考试结束时间
     }
@@ -139,10 +123,6 @@ export default {
       font-size: 26px;
       color: inherit;
       font-weight: 500;
-    }
-    .description {
-      font-size: 14px;
-      color: #888;
     }
   }
   .total {

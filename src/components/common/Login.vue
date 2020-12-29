@@ -51,7 +51,7 @@ export default {
       role: 2,
       labelPosition: 'left',
       formLabelAlign: {
-        username: '20155008',
+        username: '20081001',
         password: '123456'
       },
       json: {

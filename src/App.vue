@@ -24,7 +24,7 @@ export default {
   }
   #app {
     font-family: "Microsoft YaHei", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-    background-color: #eee;
+    background-color: rgba(1,149,255,0.1);
   }
 </style>
 

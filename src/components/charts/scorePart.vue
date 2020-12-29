@@ -1,6 +1,6 @@
 <template>
   <div class="part" >
-    <div class="box" ref="box"></div>
+    <div  v-if="!isNull" class="box" ref="box"></div>
     <div v-if="isNull">
       <span>该门考试还没人参考哦,请提醒学生参加考试。</span>
     </div>

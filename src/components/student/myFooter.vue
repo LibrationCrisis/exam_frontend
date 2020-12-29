@@ -22,7 +22,7 @@ export default {
   font-size: 14px;
 }
 #footer {
-  background-color: #eee;
+  background-color: rgba(1,149,255,0.1);
 }
 #footer ul {
   margin-top: 40px;

@@ -20,7 +20,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
-        :page-sizes="[6, 10]"
+        :page-sizes="[10]"
         :page-size="pagination.size"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagination.total"
@@ -47,12 +47,9 @@ export default {
   },
   methods: {
     getAnswerInfo() {
-      //分页查询所有试卷信息
-      // this.$axios(`/api/students/${this.pagination.current}/${this.pagination.size}`).then(res => {
-      //   this.pagination = res.data.data;
-      // }).catch(error => {});
+
       this.$axios({
-        url: `/api/students/${this.pagination.current}/${this.pagination.size}`,
+        url: `/api/students/${this.pagination.current}/${10}`,
         method: 'GET'
       }).then(res => {
         this.pagination = res.data;

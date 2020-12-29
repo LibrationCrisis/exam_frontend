@@ -3,7 +3,7 @@
     <el-row class="studentNav">
       <el-col :span="24">
         <ul class="list">
-          <li class="logo"><span>Exam-Online</span></li>
+          <li class="logo"><span>Student Exam System</span></li>
           <li><a href="javascript:;" @click="exam()">我的试卷</a></li>
           <li><router-link to="/scoreTable">我的分数</router-link></li>
           <li><a href="javascript:;">待定</a></li>

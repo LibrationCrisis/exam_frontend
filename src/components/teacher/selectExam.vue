@@ -23,7 +23,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
-        :page-sizes="[4, 8, 10, 20]"
+        :page-sizes="[10]"
         :page-size="pagination.size"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagination.total" class="page">

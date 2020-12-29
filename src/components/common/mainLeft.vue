@@ -3,13 +3,13 @@
   <div id="left">
     <el-menu
         active-text-color="#dd5862"
-        text-color="#000"
+        text-color="#CCC"
         :default-active="this.$route.path"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
         :collapse="flag"
-        background-color="#124280"
+        background-color="#777"
         menu-trigger="click" router>
       <el-submenu v-for="(item,index) in menu" :index='item.index' :key="index">
         <template slot="title">
@@ -18,7 +18,7 @@
             <span slot="title" class="title">{{ item.title }}</span>
           </div>
         </template>
-        <el-menu-item-group v-for="(list,index1) in item.content" :key="index1">
+        <el-menu-item-group v-for="(list,index1) in item.content" :key="index1" class="elfont">
           <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item1 != null">{{ list.item1 }}
           </el-menu-item>
           <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item2 != null">{{ list.item2 }}
@@ -87,6 +87,7 @@ export default {
 
 .left-width {
   width: 213px;
+  background-color: #777;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -116,5 +117,9 @@ export default {
 
 .el-submenu__title i {
   color: #fbfbfc !important;
+}
+
+.elfont {
+  color: #FFF;
 }
 </style>
