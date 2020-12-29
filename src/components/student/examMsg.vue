@@ -244,7 +244,8 @@ export default {
 }
 
 #msg {
-  background-color: #eee;
+  padding-top: 10px;
+  background-color: #FFF;
   width: 980px;
   margin: 0 auto;
 }
