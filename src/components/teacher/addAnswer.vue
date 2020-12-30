@@ -59,11 +59,6 @@ export default {
         console.log(error)
       })
     },
-    //改变当前记录条数
-    handleSizeChange(val) {
-      this.pagination.size = val
-      this.getExamInfo()
-    },
     //改变当前页码，重新发送请求
     handleCurrentChange(val) {
       this.pagination.current = val

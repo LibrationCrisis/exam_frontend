@@ -3,7 +3,7 @@
   <header id="topbar">
     <el-row>
       <el-col :span="4" class="topbar-left">
-        <span class="title" @click="index()">Teacher management system</span>
+        <span class="title">Teacher management system</span>
       </el-col>
       <el-col :span="20" class="topbar-right">
         <div class="user">
@@ -90,6 +90,8 @@ export default {
 }
 
 .topbar-left .title {
+  width: 300px;
+  height: 60px;
   font-size: 20px;
   cursor: pointer;
 }

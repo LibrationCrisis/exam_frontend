@@ -50,11 +50,6 @@ export default {
         console.log(res);
       })
     },
-    //改变当前记录条数
-    handleSizeChange(val) {
-      this.pagination.size = val;
-      this.getAnswerInfo();
-    },
     //改变当前页码，重新发送请求
     handleCurrentChange(val) {
       this.pagination.current = val;

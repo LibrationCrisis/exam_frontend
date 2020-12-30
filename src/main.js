@@ -12,7 +12,6 @@ Vue.use(ElementUI)
 Vue.use(VueCookies)
 
 Vue.config.productionTip = false
-//axios.defaults.timeout = 3000
 axios.defaults.withCredentials = true
 Vue.prototype.bus = new Vue()
 Vue.prototype.$echarts = echarts
