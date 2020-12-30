@@ -104,7 +104,7 @@ export default {
 
 <style lang="scss" scoped>
 .add {
-  padding: 0px 40px;
+  padding: 0 40px;
   width: 400px;
 }
 </style>

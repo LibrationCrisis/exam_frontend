@@ -19,7 +19,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
         :page-sizes="[10]"
@@ -57,6 +56,7 @@ export default {
         this.loading = true
         console.log(this.pagination)
       }).catch(error => {
+        console.log(error)
       })
     },
     //改变当前页码，重新发送请求
@@ -72,7 +72,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .exam {
-  padding: 0px 40px;
+  padding: 0 40px;
   overflow-x: auto;
 
   .page {

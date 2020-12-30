@@ -19,15 +19,15 @@
           </div>
         </template>
         <el-menu-item-group v-for="(list,index1) in item.content" :key="index1" class="elfont">
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item1 != null">{{ list.item1 }}
+          <el-menu-item :index="list.path" v-if="list.item1 != null">{{ list.item1 }}
           </el-menu-item>
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item2 != null">{{ list.item2 }}
+          <el-menu-item :index="list.path" v-if="list.item2 != null">{{ list.item2 }}
           </el-menu-item>
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item3 != null">{{ list.item3 }}
+          <el-menu-item :index="list.path" v-if="list.item3 != null">{{ list.item3 }}
           </el-menu-item>
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item4 != null">{{ list.item4 }}
+          <el-menu-item :index="list.path" v-if="list.item4 != null">{{ list.item4 }}
           </el-menu-item>
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item5 != null">{{ list.item5 }}
+          <el-menu-item :index="list.path" v-if="list.item5 != null">{{ list.item5 }}
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>

@@ -10,13 +10,13 @@
       <div class="show">
 
         <div class="number" :class="{'border': isTransition}">
-          <span>{{score}}</span>
+          <span>{{ score }}</span>
           <span>分数</span>
         </div>
       </div>
       <ul class="time">
-        <li class="start"><span>开始时间</span> <span>{{startTime}}</span></li>
-        <li class="end"><span>结束时间</span> <span>{{endTime}}</span></li>
+        <li class="start"><span>开始时间</span> <span>{{ startTime }}</span></li>
+        <li class="end"><span>结束时间</span> <span>{{ endTime }}</span></li>
       </ul>
     </div>
   </div>
@@ -40,8 +40,7 @@ export default {
     transiton() {  //一秒后过渡
       setTimeout(() => {
         this.isTransition = true
-        this.imgShow = true
-      },1000)
+      }, 1000)
     },
     getScore() {
       let score = this.$route.query.score
@@ -60,48 +59,58 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
   img {
     width: 160px;
     height: 160px;
   }
+
   .img1Transform {
     opacity: 1 !important;
-    transform: translateX(30px) !important;  
+    transform: translateX(30px) !important;
     transition: all 0.6s ease !important;
   }
+
   .img2Transform {
     opacity: 1 !important;
-    transform: translateX(-30px) !important;  
+    transform: translateX(-30px) !important;
     transition: all 0.6s ease !important;
   }
+
   .img1 {
     margin-top: 70px;
     opacity: 0;
-    transform: translateX(0px);  
+    transform: translateX(0px);
     transition: all 0.6s ease;
   }
+
   .img2 {
     margin-top: 30px;
     opacity: 0;
-    transform: translateX(0px);  
+    transform: translateX(0px);
     transition: all 0.6s ease;
   }
 }
+
 .time {
-  padding: 0px 70px;
+  padding: 0 70px;
+
   li {
     display: flex;
     justify-content: space-around;
     padding: 10px;
-    margin: 20px 0px;
+    margin: 20px 0;
   }
+
   li:nth-child(1) {
     background-color: #fcf8e3;
   }
+
   li:nth-child(2) {
     background-color: #e9f5e9;
   }
 }
+
 .border {
   border: 6px solid #36aafd !important;
   transition: all 2s ease;
@@ -110,30 +119,36 @@ export default {
   transform: rotate(360deg) !important;
   opacity: 1 !important;
 }
+
 .score {
   max-width: 800px;
   margin: 0 auto;
+
   .title {
-    margin: 60px 0px 30px 0px;
+    margin: 60px 0 30px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
     .name {
       font-size: 26px;
       color: inherit;
       font-weight: 500;
     }
   }
+
   .total {
     border: 1px solid #dbdbdb;
     background-color: #fff;
     padding: 40px;
+
     .look {
       border-bottom: 1px solid #dbdbdb;
-      padding: 0px 0px 14px 14px;
+      padding: 0 0 14px 14px;
       color: #36aafd;
     }
+
     .number {
       opacity: 0;
       border: 6px solid #fff;
@@ -142,18 +157,17 @@ export default {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      margin: 0 auto;
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      margin-top: 80px;
-      margin-bottom: 20px;
+      margin: 80px auto 20px;
       transition: all 1s ease;
-      
+
       span:nth-child(1) {
         font-size: 36px;
         font-weight: 600;
       }
+
       span:nth-child(2) {
         font-size: 14px;
       }

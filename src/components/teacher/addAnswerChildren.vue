@@ -17,7 +17,7 @@
                 </el-option>
               </el-select>
             </li>
-            <li v-if="optionValue == '选择题'">
+            <li v-if="optionValue === '选择题'">
               <span>所属章节：</span>
               <el-input
                   placeholder="请输入对应章节"
@@ -26,7 +26,7 @@
                   clearable>
               </el-input>
             </li>
-            <li v-if="optionValue == '填空题'">
+            <li v-if="optionValue === '填空题'">
               <span>所属章节：</span>
               <el-input
                   placeholder="请输入对应章节"
@@ -35,7 +35,7 @@
                   clearable>
               </el-input>
             </li>
-            <li v-if="optionValue == '判断题'">
+            <li v-if="optionValue === '判断题'">
               <span>所属章节：</span>
               <el-input
                   placeholder="请输入对应章节"
@@ -44,7 +44,7 @@
                   clearable>
               </el-input>
             </li>
-            <li v-if="optionValue == '选择题'">
+            <li v-if="optionValue === '选择题'">
               <span>难度等级:</span>
               <el-select v-model="postChange.level" placeholder="选择难度等级" class="w150">
                 <el-option
@@ -55,7 +55,7 @@
                 </el-option>
               </el-select>
             </li>
-            <li v-if="optionValue == '填空题'">
+            <li v-if="optionValue === '填空题'">
               <span>难度等级:</span>
               <el-select v-model="postFill.level" placeholder="选择难度等级" class="w150">
                 <el-option
@@ -66,7 +66,7 @@
                 </el-option>
               </el-select>
             </li>
-            <li v-if="optionValue == '判断题'">
+            <li v-if="optionValue === '判断题'">
               <span>难度等级:</span>
               <el-select v-model="postJudge.level" placeholder="选择难度等级" class="w150">
                 <el-option
@@ -77,7 +77,7 @@
                 </el-option>
               </el-select>
             </li>
-            <li v-if="optionValue == '选择题'">
+            <li v-if="optionValue === '选择题'">
               <span>正确选项:</span>
               <el-select v-model="postChange.rightAnswer" placeholder="选择正确答案" class="w150">
                 <el-option
@@ -90,7 +90,7 @@
             </li>
           </ul>
           <!-- 选择题部分 -->
-          <div class="change" v-if="optionValue == '选择题'">
+          <div class="change" v-if="optionValue === '选择题'">
             <div class="title">
               <el-tag>题目:</el-tag>
               <span>在下面的输入框中输入题目,形如--DNS 服务器和DHCP服务器的作用是（）</span>
@@ -156,7 +156,7 @@
             </div>
           </div>
           <!-- 填空题部分 -->
-          <div class="change fill" v-if="optionValue == '填空题'">
+          <div class="change fill" v-if="optionValue === '填空题'">
             <div class="title">
               <el-tag>题目:</el-tag>
               <span>输入题目,形如--从计算机网络系统组成的角度看，计算机网络可以分为()和()。注意需要考生答题部分一定要用括号（英文半角）括起来。</span>
@@ -190,7 +190,7 @@
             </div>
           </div>
           <!-- 判断题 -->
-          <div class="change judge" v-if="optionValue == '判断题'">
+          <div class="change judge" v-if="optionValue === '判断题'">
             <div class="title">
               <el-tag>题目:</el-tag>
               <span>在下面的输入框中输入题目</span>
@@ -398,7 +398,7 @@ export default {
       }).then(res => {
         console.log(res)
         let data = res.data
-        if (data.code == 200) {
+        if (data.code === 200) {
           setTimeout(() => {
             this.$router.push({path: '/selectAnswer'})
           }, 1000)
@@ -406,7 +406,7 @@ export default {
             message: data.message,
             type: 'success'
           })
-        } else if (data.code == 400) {
+        } else if (data.code === 400) {
           this.$message({
             message: data.message,
             type: 'error'
@@ -440,12 +440,11 @@ export default {
         }
       }).then(() => {
         this.$axios(`/api/multi-question-id`).then(res => { //获取当前题目的questionId
-          let questionId = res.data
-          this.postPaper.questionId = questionId
+          this.postPaper.questionId = res.data
           this.postPaper.questionType = 1
           this.$axios({
             url: '/api/paper-manage',
-            method: 'Post',
+            method: 'POST',
             data: {
               ...this.postPaper
             }
@@ -471,12 +470,11 @@ export default {
         }
       }).then(() => {
         this.$axios(`/api/fill-question-id`).then(res => { //获取当前题目的questionId
-          let questionId = res.data
-          this.postPaper.questionId = questionId
+          this.postPaper.questionId = res.data
           this.postPaper.questionType = 2
           this.$axios({
             url: '/api/paper-manage',
-            method: 'Post',
+            method: 'POST',
             data: {
               ...this.postPaper
             }
@@ -502,12 +500,11 @@ export default {
         }
       }).then(() => {
         this.$axios(`/api/judge-question-id`).then(res => { //获取当前题目的questionId
-          let questionId = res.data
-          this.postPaper.questionId = questionId
+          this.postPaper.questionId = res.data
           this.postPaper.questionType = 3
           this.$axios({
             url: '/api/paper-manage',
-            method: 'Post',
+            method: 'POST',
             data: {
               ...this.postPaper
             }
@@ -521,13 +518,13 @@ export default {
 
 <style lang="scss" scoped>
 .add {
-  margin: 0px 40px;
+  margin: 0 40px;
 
   .box {
-    padding: 0px 20px;
+    padding: 0 20px;
 
     ul li {
-      margin: 10px 0px;
+      margin: 10px 0;
       display: flex;
       align-items: center;
 
@@ -551,7 +548,7 @@ export default {
   }
 
   .append {
-    margin: 0px 20px;
+    margin: 0 20px;
 
     ul {
       display: flex;
@@ -577,7 +574,7 @@ export default {
         }
 
         .answer {
-          margin: 20px 0px 20px 8px;
+          margin: 20px 0 20px 8px;
         }
 
         .el-textarea {
@@ -596,7 +593,7 @@ export default {
           justify-content: center;
           align-items: center;
           width: 98%;
-          margin: 10px 0px;
+          margin: 10px 0;
 
           span {
             margin-right: 20px;

@@ -2,9 +2,9 @@
 <template>
   <footer id="footer">
     <ul>
-      <li><a href="javascript:;">关于我们</a></li>
-      <li><a href="javascript:;">免责声明</a></li>
-      <li><a href="javascript:;">使用协议</a></li>
+      <li><a href="javascript:">关于我们</a></li>
+      <li><a href="javascript:">免责声明</a></li>
+      <li><a href="javascript:">使用协议</a></li>
       <li>@Copyright 2020 ALL Rights Reserved</li>
     </ul>
   </footer>
@@ -21,9 +21,11 @@ export default {
   color: #919698;
   font-size: 14px;
 }
+
 #footer {
-  background-color: rgba(1,149,255,0.1);
+  background-color: rgba(1, 149, 255, 0.1);
 }
+
 #footer ul {
   margin-top: 40px;
   border-top: 1px solid #d5d5d5;
@@ -32,6 +34,7 @@ export default {
   height: 80px;
   line-height: 80px;
 }
+
 #footer ul li {
   color: #919698;
   font-size: 14px;

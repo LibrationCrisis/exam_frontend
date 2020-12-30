@@ -24,7 +24,7 @@
     padding: 16px 32px;
     border-radius: 4px;
     border-left: 5px solid #FDC8C8;
-    margin: 20px 0px;
+    margin: 20px 0;
   }
 }
 </style>

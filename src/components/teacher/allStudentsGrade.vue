@@ -4,12 +4,12 @@
     <el-table :data="pagination" border>
       <el-table-column prop="studentId" label="学号" width="180"></el-table-column>
       <el-table-column prop="studentName" label="姓名" width="180"></el-table-column>
-<!--      <el-table-column prop="institute" label="学院" width="200"></el-table-column>
-      <el-table-column prop="major" label="专业" width="200"></el-table-column>
-      <el-table-column prop="grade" label="年级" width="200"></el-table-column>
-      <el-table-column prop="clazz" label="班级" width="100"></el-table-column>
-      <el-table-column prop="sex" label="性别" width="120"></el-table-column>
-      <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>-->
+      <!--      <el-table-column prop="institute" label="学院" width="200"></el-table-column>
+            <el-table-column prop="major" label="专业" width="200"></el-table-column>
+            <el-table-column prop="grade" label="年级" width="200"></el-table-column>
+            <el-table-column prop="clazz" label="班级" width="100"></el-table-column>
+            <el-table-column prop="sex" label="性别" width="120"></el-table-column>
+            <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>-->
       <el-table-column label="查看成绩" width="150">
         <template slot-scope="scope">
           <el-button @click="checkGrade(scope.row.studentId)" type="primary" size="small">查看成绩</el-button>
@@ -17,7 +17,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
         :page-sizes="[10]"
@@ -56,6 +55,7 @@ export default {
         this.loading = true
         console.log(this.pagination)
       }).catch(error => {
+        console.log(error)
       })
     },
     //改变当前页码，重新发送请求
@@ -71,7 +71,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .all {
-  padding: 0px 40px;
+  padding: 0 40px;
 
   .page {
     margin-top: 20px;

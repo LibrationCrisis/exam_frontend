@@ -20,7 +20,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
         :page-sizes="[10]"
@@ -158,12 +157,12 @@ export default {
       this.$confirm("确定删除该记录吗,该操作不可逆！！！", "删除提示", {
         confirmButtonText: '确定删除',
         cancelButtonText: '算了,留着',
-        type: 'danger'
+        type: 'warning'
       }).then(() => { //确认删除
         this.$axios({
           url: `/api/exam/${examCode}`,
           method: 'delete',
-        }).then(res => {
+        }).then(() => {
           this.getExamInfo()
         })
       }).catch(() => {
@@ -264,7 +263,7 @@ export default {
 <!--</script>-->
 <style lang="scss" scoped>
 .exam {
-  padding: 0px 40px;
+  padding: 0 40px;
 
   .page {
     margin-top: 20px;

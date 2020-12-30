@@ -19,7 +19,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pagination.current"
         :page-sizes="[10]"
@@ -72,7 +71,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .exam {
-  padding: 0px 40px;
+  padding: 0 40px;
 
   .page {
     margin-top: 20px;

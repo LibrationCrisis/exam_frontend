@@ -25,14 +25,14 @@ export default {
     score() {
       let studentId = this.$route.query.studentId
       this.$axios({
-        url:`/api/score/${studentId}`,
+        url: `/api/score/${studentId}`,
         method: 'GET'
       }).then(res => { //根据学生Id查询成绩
         console.log(res)
-        if(res.status == 200) {
+        if (res.status == 200) {
           let rootData = res.data
           console.log(rootData)
-          rootData.forEach((element,index) => {
+          rootData.forEach((element, index) => {
             console.log(element.score)
             this.tableDataX.push(`第${index + 1}次`)
             this.tableDataY.push(element.score)
@@ -51,7 +51,7 @@ export default {
               {
                 data: this.tableDataY,
                 type: "line",
-                itemStyle: { normal: { label: { show: true } } }
+                itemStyle: {normal: {label: {show: true}}}
               }
             ]
           };
@@ -59,7 +59,7 @@ export default {
           scoreCharts.on("mouseover", params => {
             console.log(params.value);
           });
-        }else {
+        } else {
           this.isNull = true
         }
       })
@@ -71,14 +71,16 @@ export default {
 <style lang="scss" scoped>
 #grade {
   position: relative;
-  .box{
+
+  .box {
     width: 600px;
     height: 400px;
   }
+
   .notFound {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
   }
 }
 </style>

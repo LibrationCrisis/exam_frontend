@@ -14,19 +14,19 @@
         <div class="left" v-if="slider_flag">
           <ul class="l-top">
             <li>
-              <a href="javascript:;"></a>
+              <a href="javascript:"></a>
               <span>当前</span>
             </li>
             <li>
-              <a href="javascript:;"></a>
+              <a href="javascript:"></a>
               <span>未答</span>
             </li>
             <li>
-              <a href="javascript:;"></a>
+              <a href="javascript:"></a>
               <span>已答</span>
             </li>
             <li>
-              <a href="javascript:;"></a>
+              <a href="javascript:"></a>
               <span>标记</span>
             </li>
           </ul>
@@ -35,10 +35,10 @@
               <p>选择题部分</p>
               <ul>
                 <li v-for="(list, index1) in topic[1]" :key="index1">
-                  <a href="javascript:;"
+                  <a href="javascript:"
                      @click="change(index1)"
-                     :class="{'border': index == index1 && currentType == 1,'bg': bg_flag && topic[1][index1].isClick == true}">
-                    <span :class="{'mark': topic[1][index1].isMark == true}"></span>
+                     :class="{'border': index === index1 && currentType === 1,'bg': bg_flag && topic[1][index1].isClick === true}">
+                    <span :class="{'mark': topic[1][index1].isMark === true}"></span>
                     {{ index1 + 1 }}
                   </a>
                 </li>
@@ -48,9 +48,9 @@
               <p>填空题部分</p>
               <ul>
                 <li v-for="(list, index2) in topic[2]" :key="index2">
-                  <a href="javascript:;" @click="fill(index2)"
-                     :class="{'border': index == index2 && currentType == 2,'bg': fillAnswer[index2][3] == true}"><span
-                      :class="{'mark': topic[2][index2].isMark == true}"></span>{{ topicCount[0] + index2 + 1 }}</a>
+                  <a href="javascript:" @click="fill(index2)"
+                     :class="{'border': index === index2 && currentType === 2,'bg': fillAnswer[index2][3] === true}"><span
+                      :class="{'mark': topic[2][index2].isMark === true}"></span>{{ topicCount[0] + index2 + 1 }}</a>
                 </li>
               </ul>
             </div>
@@ -58,9 +58,9 @@
               <p>判断题部分</p>
               <ul>
                 <li v-for="(list, index3) in topic[3]" :key="index3">
-                  <a href="javascript:;" @click="judge(index3)"
-                     :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && topic[3][index3].isClick == true}"><span
-                      :class="{'mark': topic[3][index3].isMark == true}"></span>{{
+                  <a href="javascript:" @click="judge(index3)"
+                     :class="{'border': index === index3 && currentType === 3,'bg': bg_flag && topic[3][index3].isClick === true}"><span
+                      :class="{'mark': topic[3][index3].isMark === true}"></span>{{
                       topicCount[0] + topicCount[1] + index3 + 1
                     }}</a>
                 </li>
@@ -81,7 +81,7 @@
           </div>
           <div class="content">
             <p class="topic"><span class="number">{{ number }}</span>{{ showQuestion }}</p>
-            <div v-if="currentType == 1">
+            <div v-if="currentType === 1">
               <el-radio-group v-model="radio[index]" @change="getChangeLabel">
                 <el-radio :label="1">{{ showAnswer.answerA }}</el-radio>
                 <el-radio :label="2">{{ showAnswer.answerB }}</el-radio>
@@ -100,7 +100,7 @@
                 </ul>
               </div>
             </div>
-            <div class="fill" v-if="currentType == 2">
+            <div class="fill" v-if="currentType === 2">
               <div v-for="(item,currentIndex) in part" :key="currentIndex">
                 <el-input placeholder="请填在此处"
                           v-model="fillAnswer[index][currentIndex]"
@@ -120,8 +120,8 @@
                 </ul>
               </div>
             </div>
-            <div class="judge" v-if="currentType == 3">
-              <el-radio-group v-model="judgeAnswer[index]" @change="getJudgeLabel" v-if="currentType == 3">
+            <div class="judge" v-if="currentType === 3">
+              <el-radio-group v-model="judgeAnswer[index]" @change="getJudgeLabel" v-if="currentType === 3">
                 <el-radio :label="1">正确</el-radio>
                 <el-radio :label="2">错误</el-radio>
               </el-radio-group>
@@ -413,7 +413,7 @@ export default {
             case 4:
               right = "D"
           }
-          if (right == this.topic[1][index].rightAnswer) { // 当前选项与正确答案对比
+          if (right === this.topic[1][index].rightAnswer) { // 当前选项与正确答案对比
             finalScore += this.topic[1][index].score // 计算总分数
           }
           console.log(right, this.topic[1][index].rightAnswer)
@@ -443,12 +443,12 @@ export default {
           case 2:
             right = "F"
         }
-        if (right == this.topic[3][index].answer) { // 当前选项与正确答案对比
+        if (right === this.topic[3][index].answer) { // 当前选项与正确答案对比
           finalScore += this.topic[3][index].score // 计算总分数
         }
       })
       console.log(`目前总分${finalScore}`)
-      if (this.remainTime != 0) {
+      if (this.remainTime !== 0) {
         this.$confirm("考试结束时间未到,是否提前交卷", "友情提示", {
           confirmButtonText: '立即交卷',
           cancelButtonText: '再检查一下',
@@ -521,7 +521,7 @@ export default {
 <style lang="scss">
 .iconfont.icon-time {
   color: #2776df;
-  margin: 0px 6px 0px 20px;
+  margin: 0 6px 0 20px;
 }
 
 .analysis {
@@ -531,13 +531,13 @@ export default {
     color: #2776df;
     font-size: 18px;
     border: 1px solid #2776df;
-    padding: 0px 6px;
+    padding: 0 6px;
     border-radius: 4px;
     margin-left: 20px;
   }
 
   ul li:nth-child(2) {
-    margin: 20px 0px;
+    margin: 20px 0;
   }
 
   ul li:nth-child(3) {
@@ -558,7 +558,7 @@ export default {
   content: "";
   background-color: red;
   border-radius: 50%;
-  top: 0px;
+  top: 0;
   left: 22px;
 }
 
@@ -617,7 +617,7 @@ export default {
 .operation {
   background-color: #fff;
   border-radius: 4px;
-  padding: 10px 0px;
+  padding: 10px 0;
   margin-right: 10px;
 }
 
@@ -640,24 +640,22 @@ export default {
 }
 
 .content {
-  padding: 0px 20px;
+  padding: 0 20px;
 }
 
 .content .topic {
-  padding: 20px 0px;
-  padding-top: 30px;
+  padding: 30px 0 20px;
 }
 
 .right .content {
   background-color: #fff;
-  margin: 10px;
-  margin-left: 0px;
+  margin: 10px 10px 10px 0;
   height: 470px;
 }
 
 .content .el-radio-group label {
   color: #000;
-  margin: 5px 0px;
+  margin: 5px 0;
 }
 
 .content .el-radio-group {
@@ -703,16 +701,15 @@ export default {
   text-align: center;
   background-color: rgb(39, 118, 223);
   width: 240px;
-  margin: 20px 0px 20px 10px;
   border-radius: 4px;
   height: 30px;
   line-height: 30px;
   color: #fff;
-  margin-top: 22px;
+  margin: 22px 0 20px 10px;
 }
 
 #answer .left .item {
-  padding: 0px;
+  padding: 0;
   font-size: 16px;
 }
 
@@ -766,7 +763,7 @@ export default {
 .left .l-top {
   display: flex;
   justify-content: space-around;
-  padding: 16px 0px;
+  padding: 16px 0;
   border: 1px solid #eee;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -776,7 +773,7 @@ export default {
 .left {
   width: 260px;
   height: 100%;
-  margin: 10px 10px 0px 10px;
+  margin: 10px 10px 0 10px;
 }
 
 .left .l-top li:nth-child(2) a {
@@ -800,7 +797,7 @@ export default {
   position: absolute;
   background-color: red;
   border-radius: 50%;
-  top: 0px;
+  top: 0;
   left: 16px;
 }
 

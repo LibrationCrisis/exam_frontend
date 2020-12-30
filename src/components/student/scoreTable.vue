@@ -31,7 +31,6 @@
       </el-table>
       <el-row type="flex" justify="center" align="middle" class="pagination">
         <el-pagination
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="pagination.current"
             :page-sizes="[5]"
@@ -96,11 +95,8 @@ export default {
       this.pagination.current = val
       this.getScore()
     },
-    formatter(row, column) {
+    formatter(row) {
       return row.address;
-    },
-    filterTag(value, row) {
-      return row.tag === value;
     },
     filterHandler(value, row, column) {
       const property = column["property"];

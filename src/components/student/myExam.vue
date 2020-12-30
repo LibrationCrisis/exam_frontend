@@ -82,7 +82,7 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-  padding: 20px 0px 30px 0px;
+  padding: 20px 0 30px 0;
 
   .el-pagination {
     display: flex;

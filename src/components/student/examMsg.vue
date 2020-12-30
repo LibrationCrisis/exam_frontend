@@ -24,7 +24,7 @@
         </li>
       </ul>
       <ul class="info">
-        <li @click="dialogVisible = true"><a href="javascript:;"><i class="iconfont icon-info"></i>考生须知</a></li>
+        <li @click="dialogVisible = true"><a href="javascript:"><i class="iconfont icon-info"></i>考生须知</a></li>
       </ul>
     </div>
     <div class="content">
@@ -202,7 +202,7 @@ export default {
 
 #msg .content .title {
   font-size: 20px;
-  margin: 0px;
+  margin: 0;
   display: flex;
   align-items: center;
 }
@@ -218,7 +218,7 @@ export default {
 }
 
 .wrapper .info {
-  margin: 20px 0px 0px 20px;
+  margin: 20px 0 0 20px;
   border-top: 1px solid #eee;
 }
 
