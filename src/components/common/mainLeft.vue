@@ -3,7 +3,7 @@
   <div id="left">
     <el-menu
         active-text-color="#dd5862"
-        text-color="#CCC"
+        text-color="#FFF"
         :default-active="this.$route.path"
         class="el-menu-vertical-demo"
         @open="handleOpen"
@@ -54,10 +54,6 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },
-    //点击标题传递参数给navigator组件
-    handleTitle(index) {
-      // this.bus.$emit('sendIndex',index)
     },
     addData() {
       let role = this.$cookies.get("role")
