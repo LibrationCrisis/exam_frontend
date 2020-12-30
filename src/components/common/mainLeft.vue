@@ -9,7 +9,7 @@
         @open="handleOpen"
         @close="handleClose"
         :collapse="flag"
-        background-color="#777"
+        background-color="#00b38a"
         menu-trigger="click" router>
       <el-submenu v-for="(item,index) in menu" :index='item.index' :key="index">
         <template slot="title">
@@ -87,7 +87,7 @@ export default {
 
 .left-width {
   width: 213px;
-  background-color: #777;
+  background-color: #00b38a;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
